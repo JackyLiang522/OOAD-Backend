@@ -1,7 +1,7 @@
 package com.sustech.ooad.controller;
 
 import com.sustech.ooad.entity.Result;
-import com.sustech.ooad.controller.service.UserService;
+import com.sustech.ooad.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 

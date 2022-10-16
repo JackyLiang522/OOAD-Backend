@@ -1,7 +1,7 @@
-package com.sustech.ooad.controller.service.impl;
+package com.sustech.ooad.service.impl;
 
 
-import com.sustech.ooad.controller.service.UserService;
+import com.sustech.ooad.service.UserService;
 
 public class UserServiceImpl implements UserService {
     @Override

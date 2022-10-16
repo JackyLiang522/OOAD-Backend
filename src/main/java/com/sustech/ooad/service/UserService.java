@@ -1,4 +1,4 @@
-package com.sustech.ooad.controller.service;
+package com.sustech.ooad.service;
 
 import org.springframework.stereotype.Service;
 
