@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     public boolean isUserExist(String address);
 
-    public String getPasswordByUserAddress(String address);
+    public String getPasswordByEmailAddress(String address);
 }
