@@ -1,8 +1,7 @@
 package com.sustech.ooad.dao;
 
-import com.sustech.ooad.entity.User;
+import com.sustech.ooad.entity.Client;
 import com.sustech.ooad.mapper.UserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,7 @@ public class UserDAO {
     }
 
     @Nullable
-    public User getUserByEmail(String email) {
+    public Client getUserByEmail(String email) {
         return jdbcTemplate.query("SELECT * FROM users WHERE email = ?", userMapper, email)
             .stream()
             .findAny()
