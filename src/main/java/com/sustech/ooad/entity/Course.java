@@ -26,7 +26,7 @@ public class Course {
     private int price;
 
     @ManyToMany(mappedBy = "courses")
-    private List<Client> clients;
+    private List<Client> clients = new ArrayList<>();
 
 
     public Course() {
