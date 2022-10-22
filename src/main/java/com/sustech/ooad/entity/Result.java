@@ -1,6 +1,5 @@
 package com.sustech.ooad.entity;
 
-import lombok.Data;
 import lombok.Getter;
 
 @Getter

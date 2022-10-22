@@ -2,12 +2,12 @@ package com.sustech.ooad.service.impl;
 
 import com.sustech.ooad.entity.Client;
 import com.sustech.ooad.repository.ClientRepository;
-import com.sustech.ooad.service.UserService;
-import org.springframework.stereotype.Service;
+import com.sustech.ooad.service.CilentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class ClientServiceImpl implements CilentService {
     @Autowired
     private ClientRepository clientRepository;
 
@@ -25,5 +25,10 @@ public class UserServiceImpl implements UserService {
         } else {
             return user.getPassword();
         }
+    }
+
+    @Override
+    public String addUser(String email, String password, String username, boolean isTeacher) {
+        return null;
     }
 }
