@@ -1,7 +1,7 @@
 package com.sustech.ooad.controller;
 
 import com.sustech.ooad.entity.Result;
-import com.sustech.ooad.service.CilentService;
+import com.sustech.ooad.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClientController {
 
     @Autowired
-    private final CilentService cilentService;
+    private final ClientService clientService;
 
-    public ClientController(CilentService cilentService) {
-        this.cilentService = cilentService;
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
     }
 
     @PostMapping("login")
     public Result login(String email, String password) {
-        if (cilentService.isUserExist(email) &&
-            cilentService.getPasswordByEmailAddress(email).equals(password)) {
+        if (clientService.isUserExist(email) &&
+            clientService.getPasswordByEmailAddress(email).equals(password)) {
             return new Result(1);
         } else {
             return new Result(2);
@@ -30,10 +30,10 @@ public class ClientController {
 
     @PostMapping("/register")
     public Result register(String email, String password, String username, boolean isTeacher) {
-        if (cilentService.isUserExist(email)) {
+        if (clientService.isUserExist(email)) {
             return new Result(2);
         } else {
-            cilentService.addUser(email, password, username, isTeacher);
+            clientService.addUser(email, password, username, isTeacher);
             return new Result(1);
         }
     }

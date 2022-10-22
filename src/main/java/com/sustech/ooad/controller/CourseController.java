@@ -1,5 +1,6 @@
 package com.sustech.ooad.controller;
 
+import com.sustech.ooad.entity.Chapter;
 import com.sustech.ooad.entity.Course;
 import com.sustech.ooad.entity.Result;
 import com.sustech.ooad.service.CourseService;
@@ -27,12 +28,17 @@ public class CourseController {
     }
 
     @GetMapping("list_chapters")
-    public List<Course> listChaptersByCourseId (int courseId) {
+    public List<Chapter> listChaptersByCourseId (int courseId) {
         return courseService.listChaptersByCourseId(courseId);
     }
 
     @PostMapping("subscribe")
     public Result subscribe(int courseId) {
+        return null;
+    }
+
+    @PostMapping("")
+    public Result addCourse(int courseId) {
         return null;
     }
 }

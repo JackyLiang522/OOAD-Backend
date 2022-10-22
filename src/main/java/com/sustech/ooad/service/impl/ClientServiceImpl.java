@@ -2,12 +2,12 @@ package com.sustech.ooad.service.impl;
 
 import com.sustech.ooad.entity.Client;
 import com.sustech.ooad.repository.ClientRepository;
-import com.sustech.ooad.service.CilentService;
+import com.sustech.ooad.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ClientServiceImpl implements CilentService {
+public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientRepository clientRepository;
 

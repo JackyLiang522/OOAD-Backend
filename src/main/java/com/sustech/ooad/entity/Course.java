@@ -23,9 +23,6 @@ public class Course {
 
     private int price;
 
-
-    // @ManyToMany(targetEntity = Client.class)
-    // @JoinTable(name = "clients")
     @ManyToMany(mappedBy = "courses")
     private List<Client> clients;
 

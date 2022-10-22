@@ -3,7 +3,7 @@ package com.sustech.ooad.service;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface CilentService {
+public interface ClientService {
     public boolean isUserExist(String email);
 
     public String getPasswordByEmailAddress(String email);
