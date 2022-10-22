@@ -8,9 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Chapter {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -21,4 +28,7 @@ public class Chapter {
         joinColumns = @JoinColumn(name = "chapter_id"),
         inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses;
+
+    @OneToMany(mappedBy = "chapter")
+    private List<Comment> comments = new ArrayList<>();
 }
