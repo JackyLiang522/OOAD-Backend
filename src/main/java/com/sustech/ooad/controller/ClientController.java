@@ -28,7 +28,7 @@ public class ClientController {
         }
     }
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public Result register(String email, String password, String username, boolean isTeacher) {
         if (clientService.isUserExist(email)) {
             return new Result(2);

@@ -3,23 +3,23 @@ package com.sustech.ooad.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Getter
+@Setter
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @NotNull
     private String name;
 
     private String email;
 
     private String password;
-
-    private boolean is_student;
 
     private boolean is_teacher;
 
@@ -35,12 +35,10 @@ public class Client {
     public Client() {
     }
 
-    public Client(int id, @NotNull String name, String email, String password, boolean is_student, boolean is_teacher, boolean is_admin) {
-        this.id = id;
+    public Client(@NotNull String name, String email, String password, boolean is_teacher, boolean is_admin) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.is_student = is_student;
         this.is_teacher = is_teacher;
         this.is_admin = is_admin;
     }

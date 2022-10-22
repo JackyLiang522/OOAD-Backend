@@ -28,7 +28,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public String addUser(String email, String password, String username, boolean isTeacher) {
-        return null;
+    public Client addUser(String email, String password, String username, boolean isTeacher) {
+        Client client = new Client(username, email, password, isTeacher, false);
+        return clientRepository.save(client);
     }
 }
