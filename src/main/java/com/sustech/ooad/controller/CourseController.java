@@ -28,7 +28,7 @@ public class CourseController {
     }
 
     @GetMapping("list_chapters")
-    public List<Chapter> listChaptersByCourseId (int courseId) {
+    public List<Chapter> listChaptersByCourseId (Long courseId) {
         return courseService.listChaptersByCourseId(courseId);
     }
 
@@ -38,8 +38,7 @@ public class CourseController {
     }
 
     @PostMapping("")
-    public Result addCourse(int courseId) {
-        return null;
+    public void addCourse() {
     }
 }
 
