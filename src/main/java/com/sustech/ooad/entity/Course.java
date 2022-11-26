@@ -1,7 +1,7 @@
 package com.sustech.ooad.entity;
 
+import java.util.ArrayList;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,28 +19,29 @@ public class Course {
 
     private String name;
 
-    private int chapter_count;
+    private int chapterCount;
 
     private String introduction;
 
-    private int price;
+    private int price = 0;
+
+    private int status = 0;
 
     @ManyToMany(mappedBy = "courses")
-    private List<Client> clients;
+    private List<Client> clients = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "courses")
+    private List<Chapter> chapters;
 
 
     public Course() {
 
     }
 
-    public Course(int id, String teacher, String name, int chapter_count, String introduction, int price) {
-        this.id = id;
+    public Course(String teacher, String name, String introduction, int price) {
         this.teacher = teacher;
         this.name = name;
-        this.chapter_count = chapter_count;
         this.introduction = introduction;
         this.price = price;
     }
-
-
 }

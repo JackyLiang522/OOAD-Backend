@@ -30,7 +30,7 @@ public class Client {
             name = "course_clients",
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private List<Course> courses;
+    private List<Course> courses = new ArrayList<>();
 
     public Client() {
     }

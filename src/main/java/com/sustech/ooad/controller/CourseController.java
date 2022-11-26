@@ -28,7 +28,7 @@ public class CourseController {
     }
 
     @GetMapping("list_chapters")
-    public List<Chapter> listChaptersByCourseId (int courseId) {
+    public List<Chapter> listChaptersByCourseId (Long courseId) {
         return courseService.listChaptersByCourseId(courseId);
     }
 
@@ -38,8 +38,17 @@ public class CourseController {
     }
 
     @PostMapping("")
-    public Result addCourse(int courseId) {
-        return null;
+    public void addCourse(String teacher, String name, String introduction, int price) {
+        courseService.addCourse(teacher, name, introduction, price);
+    }
+
+    @PostMapping("censor")
+    public void censor(Long courseId, boolean pass) {
+        if (pass) {
+            courseService.updateCourseStatus(courseId, 1);
+        } else {
+            courseService.updateCourseStatus(courseId, 2);
+        }
     }
 }
 
