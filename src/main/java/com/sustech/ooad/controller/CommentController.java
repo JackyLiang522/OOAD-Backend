@@ -29,8 +29,8 @@ public class CommentController {
     }
 
     @PostMapping("")
-    public void add(Chapter chapter, String contents, int id, String nickname, int user_id){
-        commentService.addComment(chapter, contents, id, nickname, user_id);
+    public Comment add(Chapter chapter, String contents, int id, String nickname, int user_id){
+        return commentService.addComment(chapter, contents, id, nickname, user_id);
     }
 
     @PostMapping("")
@@ -39,7 +39,7 @@ public class CommentController {
     }
 
     @PostMapping("")
-    public void update(int user_id, long id, String contents){
-        commentService.updateComment(user_id, id, contents);
+    public Comment update(int user_id, long id, String contents){
+        return commentService.updateComment(user_id, id, contents);
     }
 }
