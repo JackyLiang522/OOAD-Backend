@@ -11,5 +11,7 @@ public interface CourseService {
 
     public List<Chapter> listChaptersByCourseId(Long courseId);
 
-    public void addCourse();
+    public void addCourse(String name, String teacher, String introduction, int price);
+
+    public void updateCourseStatus(Long courseId, int status);
 }

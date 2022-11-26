@@ -38,7 +38,17 @@ public class CourseController {
     }
 
     @PostMapping("")
-    public void addCourse() {
+    public void addCourse(String teacher, String name, String introduction, int price) {
+        courseService.addCourse(teacher, name, introduction, price);
+    }
+
+    @PostMapping("censor")
+    public void censor(Long courseId, boolean pass) {
+        if (pass) {
+            courseService.updateCourseStatus(courseId, 1);
+        } else {
+            courseService.updateCourseStatus(courseId, 2);
+        }
     }
 }
 

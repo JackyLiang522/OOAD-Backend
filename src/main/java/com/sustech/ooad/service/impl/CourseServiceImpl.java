@@ -30,7 +30,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void addCourse() {
+    public void addCourse(String teacher, String name, String introduction, int price) {
+        Course course = new Course(teacher, name, introduction, price);
+        courseRepository.save(course);
+    }
 
+    @Override
+    public void updateCourseStatus(Long courseId, int status) {
+        Course course = courseRepository.findById(courseId).orElse(null);
+        course.setStatus(status);
+        courseRepository.save(course);
     }
 }

@@ -1,5 +1,6 @@
 package com.sustech.ooad.entity;
 
+import java.util.ArrayList;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,9 @@ public class Course {
 
     private String introduction;
 
-    private int price;
+    private int price = 0;
+
+    private int status = 0;
 
     @ManyToMany(mappedBy = "courses")
     private List<Client> clients = new ArrayList<>();
@@ -35,14 +38,10 @@ public class Course {
 
     }
 
-    public Course(int id, String teacher, String name, int chapterCount, String introduction, int price) {
-        this.id = id;
+    public Course(String teacher, String name, String introduction, int price) {
         this.teacher = teacher;
         this.name = name;
-        this.chapterCount = chapterCount;
         this.introduction = introduction;
         this.price = price;
     }
-
-
 }
