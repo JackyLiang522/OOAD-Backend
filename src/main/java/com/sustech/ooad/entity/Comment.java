@@ -21,24 +21,42 @@ public class Comment {
     private int id;
 
 
-    private String username;
+    private String nickname;
 
 
-    private int userid;
+    private int user_id;
 
     public Comment() {
 
     }
 
-    public Comment(Chapter chapter, String contents, int id, String username, int userid) {
+    public Comment(Chapter chapter, String contents, int id, String nickname, int user_id) {
         this.chapter = chapter;
         this.contents = contents;
         this.id = id;
-        this.username = username;
-        this.userid = userid;
+        this.nickname = nickname;
+        this.user_id = user_id;
     }
 
+    public int getUser_id() {
+        return user_id;
+    }
 
+    public Chapter getChapter() {
+        return chapter;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
 }
 
 
