@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/course/")
+@RequestMapping("/api/course")
 public class CourseController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping("list")
+    @GetMapping("/list")
     public List<Course> list() {
         return courseService.listAllCourses();
     }
@@ -37,7 +37,7 @@ public class CourseController {
         courseService.addCourse(teacher, name, introduction, price);
     }
 
-    @PostMapping("censor")
+    @PostMapping("/censor")
     public void censor(Long courseId, boolean pass) {
         if (pass) {
             courseService.updateCourseStatus(courseId, 1);
@@ -46,12 +46,12 @@ public class CourseController {
         }
     }
 
-    @PostMapping("subscribe")
+    @PostMapping("/subscribe")
     public void subscribe(Long courseId, Long clientId) {
 
     }
 
-    @PostMapping("purchase")
+    @PostMapping("/purchase")
     public void purchase(Long courseId, Long clientId) {
 
     }
