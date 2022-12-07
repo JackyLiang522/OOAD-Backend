@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public interface CourseService {
     public List<Course> listAllCourses();
 
-    public List<Chapter> listChaptersByCourseId(Long courseId);
+    public Course getCourseById(Long courseId);
 
     public void addCourse(String name, String teacher, String introduction, int price);
 

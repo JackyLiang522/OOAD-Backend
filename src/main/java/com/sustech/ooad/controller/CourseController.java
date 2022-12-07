@@ -22,19 +22,14 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping("")
+    @GetMapping("list")
     public List<Course> list() {
         return courseService.listAllCourses();
     }
 
-    @GetMapping("list_chapters")
-    public List<Chapter> listChaptersByCourseId (Long courseId) {
-        return courseService.listChaptersByCourseId(courseId);
-    }
-
-    @PostMapping("subscribe")
-    public Result subscribe(int courseId) {
-        return null;
+    @GetMapping("")
+    public Course getCourseById(Long courseId) {
+        return courseService.getCourseById(courseId);
     }
 
     @PostMapping("")
@@ -49,6 +44,16 @@ public class CourseController {
         } else {
             courseService.updateCourseStatus(courseId, 2);
         }
+    }
+
+    @PostMapping("subscribe")
+    public void subscribe(Long courseId, Long clientId) {
+
+    }
+
+    @PostMapping("purchase")
+    public void purchase(Long courseId, Long clientId) {
+
     }
 }
 

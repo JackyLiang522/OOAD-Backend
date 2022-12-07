@@ -20,13 +20,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Chapter> listChaptersByCourseId(Long courseId) {
-        Course course = courseRepository.findById(courseId).orElse(null);
-        if (course == null) {
-            return null;
-        } else {
-            return course.getChapters();
-        }
+    public Course getCourseById(Long courseId) {
+        return courseRepository.findById(courseId).orElse(null);
     }
 
     @Override

@@ -13,11 +13,11 @@ import java.util.List;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int courseId;
 
     private String teacher;
 
-    private String name;
+    private String courseName;
 
     private int chapterCount;
 
@@ -25,6 +25,11 @@ public class Course {
 
     private int price = 0;
 
+    /*
+    0: under review
+    1: approved
+    2: deleted
+     */
     private int status = 0;
 
     @ManyToMany(mappedBy = "courses")
@@ -40,7 +45,7 @@ public class Course {
 
     public Course(String teacher, String name, String introduction, int price) {
         this.teacher = teacher;
-        this.name = name;
+        this.courseName = name;
         this.introduction = introduction;
         this.price = price;
     }
