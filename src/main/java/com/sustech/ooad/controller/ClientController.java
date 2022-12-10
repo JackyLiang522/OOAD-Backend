@@ -20,22 +20,21 @@ public class ClientController {
     }
 
     @PostMapping("/login")
-    public Long login(String email, String password) {
+    public Client login(String email, String password) {
         Client client = clientService.getUserByEmail(email);
         if (client != null && client.getPassword().equals(password)) {
-            return client.getId();
+            return client;
         } else {
-            return -1L;
+            return null;
         }
     }
 
     @PostMapping("/register")
-    public Long register(String email, String password, String username, boolean isTeacher) {
+    public Client register(String email, String password, String username, boolean isTeacher) {
         if (clientService.isUserExist(email)) {
-            return -1L;
+            return null;
         } else {
-            clientService.addUser(email, password, username, isTeacher);
-            return 1L;
+            return clientService.addUser(email, password, username, isTeacher);
         }
     }
 
