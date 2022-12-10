@@ -21,9 +21,9 @@ public class Client {
 
     private String password;
 
-    private boolean is_teacher;
+    private boolean isTeacher;
 
-    private boolean is_admin;
+    private boolean isAdmin;
 
     @ManyToMany
     @JoinTable(
@@ -35,12 +35,12 @@ public class Client {
     public Client() {
     }
 
-    public Client(@NotNull String name, String email, String password, boolean is_teacher, boolean is_admin) {
+    public Client(@NotNull String name, String email, String password, boolean isTeacher, boolean isAdmin) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.is_teacher = is_teacher;
-        this.is_admin = is_admin;
+        this.isTeacher = isTeacher;
+        this.isAdmin = isAdmin;
     }
 
     public String getPassword() {

@@ -10,4 +10,8 @@ public interface ClientService {
     public String getPasswordByEmailAddress(String email);
 
     public Client addUser(String email, String password, String username, boolean isTeacher);
+
+    public Client getUserByEmail(String email);
+
+    public Client getUserById(Long id);
 }

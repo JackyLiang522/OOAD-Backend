@@ -1,14 +1,15 @@
 package com.sustech.ooad.controller;
 
-import com.sustech.ooad.entity.Result;
+import com.sustech.ooad.entity.Client;
 import com.sustech.ooad.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/client")
 public class ClientController {
 
     @Autowired
@@ -18,24 +19,29 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @PostMapping("login")
-    public Result login(String email, String password) {
-        if (clientService.isUserExist(email) &&
-            clientService.getPasswordByEmailAddress(email).equals(password)) {
-            return new Result(1);
+    @PostMapping("/login")
+    public Long login(String email, String password) {
+        Client client = clientService.getUserByEmail(email);
+        if (client != null && client.getPassword().equals(password)) {
+            return client.getId();
         } else {
-            return new Result(2);
+            return -1L;
         }
     }
 
-    @PostMapping("register")
-    public Result register(String email, String password, String username, boolean isTeacher) {
+    @PostMapping("/register")
+    public Long register(String email, String password, String username, boolean isTeacher) {
         if (clientService.isUserExist(email)) {
-            return new Result(2);
+            return -1L;
         } else {
             clientService.addUser(email, password, username, isTeacher);
-            return new Result(1);
+            return 1L;
         }
+    }
+
+    @GetMapping("/")
+    public Client getUserById(Long id) {
+        return clientService.getUserById(id);
     }
 }
 

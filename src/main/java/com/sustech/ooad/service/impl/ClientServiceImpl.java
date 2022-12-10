@@ -32,4 +32,9 @@ public class ClientServiceImpl implements ClientService {
         Client client = new Client(username, email, password, isTeacher, false);
         return clientRepository.save(client);
     }
+
+    @Override
+    public Client getUserByEmail(String email) {
+        return clientRepository.findByEmail(email).stream().findAny().orElse(null);
+    }
 }
