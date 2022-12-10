@@ -37,4 +37,9 @@ public class ClientServiceImpl implements ClientService {
     public Client getUserByEmail(String email) {
         return clientRepository.findByEmail(email).stream().findAny().orElse(null);
     }
+
+    @Override
+    public Client getUserById(Long id) {
+        return clientRepository.findById(id).orElse(null);
+    }
 }

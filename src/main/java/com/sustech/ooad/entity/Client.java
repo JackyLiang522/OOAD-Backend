@@ -27,10 +27,17 @@ public class Client {
 
     @ManyToMany
     @JoinTable(
-            name = "course_clients",
+            name = "subscribed",
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private List<Course> courses = new ArrayList<>();
+    private List<Course> coursesSubscribed = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "purchased",
+        joinColumns = @JoinColumn(name = "client_id"),
+        inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private List<Course> coursesPurchased = new ArrayList<>();
 
     public Client() {
     }

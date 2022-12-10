@@ -13,7 +13,7 @@ import java.util.List;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long courseId;
+    private Long id;
 
     private String teacher;
 
@@ -32,8 +32,11 @@ public class Course {
      */
     private int status = 0;
 
-    @ManyToMany(mappedBy = "courses")
-    private List<Client> clients = new ArrayList<>();
+    @ManyToMany(mappedBy = "coursesSubscribed")
+    private List<Client> clientsSubscribed = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "coursesPurchased")
+    private List<Client> clientsPurchased = new ArrayList<>();
 
     @ManyToMany(mappedBy = "courses")
     private List<Chapter> chapters;

@@ -39,7 +39,7 @@ public class ClientController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public Client getUserById(Long id) {
         return clientService.getUserById(id);
     }
