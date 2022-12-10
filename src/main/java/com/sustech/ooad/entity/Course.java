@@ -41,7 +41,7 @@ public class Course {
     @ManyToMany(mappedBy = "courses")
     private List<Chapter> chapters;
 
-    @ManyToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course")
     private List<Announcement> announcements;
 
 
