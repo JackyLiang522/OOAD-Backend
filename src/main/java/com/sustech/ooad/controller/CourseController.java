@@ -6,6 +6,7 @@ import com.sustech.ooad.entity.Course;
 import com.sustech.ooad.service.ClientService;
 import com.sustech.ooad.service.CourseService;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +23,20 @@ public class CourseController {
 
     @GetMapping("/list")
     public List<Course> list() {
-        return courseService.listAllCourses();
+        return courseService.listAllCourses().stream()
+            .filter(course -> course.getStatus() == 1)
+            .collect(Collectors.toList());
+    }
+
+    @GetMapping("/list_under_review")
+    public List<Course> listUnderReview() {
+        return courseService.listAllCourses().stream()
+            .filter(course -> course.getStatus() == 0)
+            .collect(Collectors.toList());
     }
 
     // http://localhost:8081/api/course/getById?courseId=
-    @GetMapping("/getById")
+    @GetMapping("")
     public Course getCourseById(@RequestParam Long courseId) {
         return courseService.getCourseById(courseId);
     }
@@ -35,6 +45,11 @@ public class CourseController {
     @PostMapping("/add")
     public void addCourse(@RequestParam String teacher, @RequestParam String name, @RequestParam String introduction, @RequestParam int price) {
         courseService.addCourse(teacher, name, introduction, price);
+    }
+
+    @PostMapping("/update_status")
+    public void updateCourseStatus(@RequestParam Long courseId, @RequestParam int status) {
+        courseService.updateCourseStatus(courseId, status);
     }
 
     // http://localhost:8081/api/course/censor?courseId=&&pass=
