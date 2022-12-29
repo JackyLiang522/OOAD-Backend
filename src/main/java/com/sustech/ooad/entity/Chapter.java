@@ -25,6 +25,10 @@ public class Chapter {
     @OneToMany(mappedBy = "chapter")
     private List<Comment> comments = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "chapter")
+    private List<Quiz> quizzes = new ArrayList<>();
+
     @NotNull
     private String name;
 
