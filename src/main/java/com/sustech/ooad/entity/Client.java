@@ -42,6 +42,7 @@ public class Client {
                     referencedColumnName = "id"))
     private List<Course> coursesSubscribed = new ArrayList<>();
 
+
     // 购买课程
     @JsonIgnore
     @ManyToMany

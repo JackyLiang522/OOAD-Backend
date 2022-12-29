@@ -55,9 +55,6 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private List<Chapter> chapters = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "course")
-    private List<Assignment> assignments = new ArrayList<>();
 
     public Course() {
 

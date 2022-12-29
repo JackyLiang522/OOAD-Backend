@@ -11,6 +11,5 @@ public interface AssignmentService {
 
     void saveAssignment(Assignment assignment);
 
-    List<Assignment> getAssignmentsByCourse(Course course);
 }
 

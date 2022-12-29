@@ -29,9 +29,12 @@ public class Chapter {
     @OneToMany(mappedBy = "chapter")
     private List<Quiz> quizzes = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "chapter")
+    private Assignment assignment;
+
     @NotNull
     private String name;
-
 
     public Chapter() {
 

@@ -21,9 +21,5 @@ public class AssignmentServiceImpl implements AssignmentService {
         assignmentRepository.save(assignment);
     }
 
-    @Override
-    public List<Assignment> getAssignmentsByCourse(Course course) {
-        return assignmentRepository.getAssignmentsByCourse(course);
-    }
 
 }
