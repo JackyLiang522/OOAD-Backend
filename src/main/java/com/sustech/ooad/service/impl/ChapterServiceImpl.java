@@ -21,13 +21,18 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
-    public void save(Chapter chapter) {
-        chapterRepository.save(chapter);
+    public Chapter save(Chapter chapter) {
+        return chapterRepository.save(chapter);
     }
 
     @Override
     public List<Chapter> findChaptersBYCourse(Course course) {
         return chapterRepository.findChaptersByCourse(course);
+    }
+
+    @Override
+    public Chapter getChapterById(Long chapterId) {
+        return chapterRepository.getOne(chapterId);
     }
 
 }

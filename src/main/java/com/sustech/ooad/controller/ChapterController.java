@@ -31,11 +31,19 @@ public class ChapterController {
     // http://localhost:8081/api/chapter/add?courseId=&&chapterName=
     @PostMapping("/add")
     @Transactional
-    public void addChapter(@RequestParam Long courseId, @RequestParam String chapterName){
+    public Chapter addChapter(@RequestParam Long courseId, @RequestParam String chapterName){
         Course course = courseService.getCourseById(courseId);
         Chapter chapter = new Chapter(chapterName);
         chapter.setCourse(course);
         course.getChapters().add(chapter);
-        chapterService.save(chapter);
+        return chapterService.save(chapter);
+    }
+
+    @PutMapping("/update")
+    @Transactional
+    public Chapter updateChapter(@RequestParam Long chapterId, @RequestParam String chapterName) {
+        Chapter chapter = chapterService.getChapterById(chapterId);
+        chapter.setName(chapterName);
+        return chapterService.save(chapter);
     }
 }
