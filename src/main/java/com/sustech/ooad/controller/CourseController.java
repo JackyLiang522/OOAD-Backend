@@ -49,6 +49,11 @@ public class CourseController {
         return courseService.getCourseById(courseId);
     }
 
+    @GetMapping("/get_teacher")
+    public Client getTeacherByCourseId(@RequestParam Long courseId) {
+        return courseService.getCourseTeacher(courseId);
+    }
+
     // http://localhost:8081/api/course/add?teacher=&&name=&&introduction=&&price=
     @PostMapping("/add")
     @Transactional
@@ -84,12 +89,11 @@ public class CourseController {
         client.getCoursesSubscribed().add(course);
     }
 
-    // 购买
-    // http://localhost:8081/api/course/purchase?courseId=&&clientId=
-    @PostMapping("/purchase")
+    @GetMapping("/list_subscribed")
     @Transactional
-    public void purchase(@RequestParam Long courseId, @RequestParam Long clientId) {
-
+    public List<Course> listSubscribed(@RequestParam Long clientId) {
+        Client client = clientService.getUserById(clientId);
+        return client.getCoursesSubscribed();
     }
 }
 

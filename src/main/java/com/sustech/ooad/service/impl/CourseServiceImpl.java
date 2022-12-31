@@ -46,4 +46,10 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository.findCoursesByTeacher(teacher);
     }
 
+    @Override
+    public Client getCourseTeacher(Long courseId) {
+        Course course = courseRepository.findById(courseId).orElse(null);
+        return course != null ? course.getTeacher() : null;
+    }
+
 }

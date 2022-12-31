@@ -18,4 +18,6 @@ public interface CourseService {
 
 
     List<Course> getCourseByTeacher(Client teacher);
+
+    Client getCourseTeacher(Long courseId);
 }
