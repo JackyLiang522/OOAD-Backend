@@ -26,8 +26,8 @@ public class Chapter {
     private List<Comment> comments = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "chapter")
-    private List<Quiz> quizzes = new ArrayList<>();
+    @OneToOne(mappedBy = "chapter")
+    private Quiz quiz;
 
     @JsonIgnore
     @OneToOne(mappedBy = "chapter")

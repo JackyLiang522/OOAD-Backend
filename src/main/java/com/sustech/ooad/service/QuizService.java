@@ -16,9 +16,7 @@ public interface QuizService {
 
     public void addQuiz(Chapter chapter, String description, String options);
 
-    public void updateQuizDescription(Long quizId, String description);
+    Quiz getQuizByChapter(Chapter chapter);
 
-    public void updateQuizOptions(Long quizId, String options);
-
-    List<Quiz> getQuizByChapter(Chapter chapter);
+    void save(Quiz quiz);
 }

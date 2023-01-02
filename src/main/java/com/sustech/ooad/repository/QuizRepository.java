@@ -12,16 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
-    @Transactional(readOnly = false)
-    @Modifying
-    @Query("update Quiz set description = ?2 where id = ?1")
-    void updateDescription(Long id, String description);
 
-    @Transactional(readOnly = false)
-    @Modifying
-    @Query("update Quiz set options = ?2 where id = ?1")
-    void updateOptions(Long id, String option);
+    Quiz findQuizByChapter(Chapter chapter);
 
-    List<Quiz> findQuizzesByChapter(Chapter chapter);
+
 
 }

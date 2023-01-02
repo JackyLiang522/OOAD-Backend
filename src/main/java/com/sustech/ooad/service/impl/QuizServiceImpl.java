@@ -27,26 +27,24 @@ public class QuizServiceImpl implements QuizService {
         return quizRepository.findById(quizId).orElse(null);
     }
 
+
     @Override
     public void addQuiz(Chapter chapter, String description, String options) {
+        /*
         Quiz quiz = new Quiz(chapter, description, options);
         chapter.getQuizzes().add(quiz);
+        quizRepository.save(quiz);*/
+    }
+
+    @Override
+    public Quiz getQuizByChapter(Chapter chapter) {
+        return quizRepository.findQuizByChapter(chapter);
+    }
+
+    @Override
+    public void save(Quiz quiz) {
         quizRepository.save(quiz);
     }
 
-    @Override
-    public void updateQuizDescription(Long quizId, String description) {
-        quizRepository.updateDescription(quizId, description);
-    }
-
-    @Override
-    public void updateQuizOptions(Long quizId, String option) {
-        quizRepository.updateOptions(quizId, option);
-    }
-
-    @Override
-    public List<Quiz> getQuizByChapter(Chapter chapter) {
-        return quizRepository.findQuizzesByChapter(chapter);
-    }
 
 }

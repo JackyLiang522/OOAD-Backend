@@ -3,6 +3,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -13,21 +15,19 @@ public class Quiz {
     private int id;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chapter")
+    @OneToOne
     private Chapter chapter;
 
-    private String description;
 
-    private String options;
+    @JsonIgnore
+    @OneToMany(mappedBy = "quiz")
+    private List<QuizProblem> quizProblems = new ArrayList<>();
 
     public Quiz() {
 
     }
 
-    public Quiz(Chapter chapter, String description, String options) {
+    public Quiz(Chapter chapter) {
         this.chapter = chapter;
-        this.description = description;
-        this.options = options;
     }
 }
