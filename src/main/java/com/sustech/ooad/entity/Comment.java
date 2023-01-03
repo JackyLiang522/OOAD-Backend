@@ -20,7 +20,7 @@ public class Comment {
 
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(
             name = "user_id",
             nullable = false,
@@ -31,7 +31,7 @@ public class Comment {
     private Date createTime;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(
             name = "chapter_id",
             nullable = false,

@@ -3,10 +3,15 @@ package com.sustech.ooad.controller;
 
 import com.sustech.ooad.entity.Client;
 import com.sustech.ooad.entity.Course;
+import com.sustech.ooad.entity.TransactionRecord;
 import com.sustech.ooad.service.ClientService;
 import com.sustech.ooad.service.CourseService;
+
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.sustech.ooad.service.TransactionRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +25,9 @@ public class CourseController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private TransactionRecordService transactionRecordService;
 
     @GetMapping("/list")
     public List<Course> list() {
@@ -82,12 +90,20 @@ public class CourseController {
     // http://localhost:8081/api/course/subscribe?courseId=&&clientId=
     @PostMapping("/subscribe")
     @Transactional
-    public void subscribe(@RequestParam Long courseId, @RequestParam Long clientId) {
+    public boolean subscribe(@RequestParam Long courseId, @RequestParam Long clientId) {
         Course course = courseService.getCourseById(courseId);
         Client client = clientService.getUserById(clientId);
-        course.getClientsSubscribed().add(client);
-        client.getCoursesSubscribed().add(course);
-
+        if (client.getAccount() >= course.getPrice()){
+            course.getClientsSubscribed().add(client);
+            client.getCoursesSubscribed().add(course);
+            client.setAccount(client.getAccount()-course.getPrice());
+            TransactionRecord record = new TransactionRecord(client.getAccount(), -course.getPrice(),client,new Date(), course.getCourseName());
+            client.getTransactionRecords().add(record);
+            transactionRecordService.save(record);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @GetMapping("/list_subscribed")

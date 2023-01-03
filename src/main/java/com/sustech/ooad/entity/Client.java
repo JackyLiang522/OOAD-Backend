@@ -60,6 +60,10 @@ public class Client {
     @OneToMany(mappedBy = "student")
     private List<AssignmentGradeBook> assignmentGradeBooks = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private List<TransactionRecord> transactionRecords = new ArrayList<>();
+
 
     public Client() {
 
