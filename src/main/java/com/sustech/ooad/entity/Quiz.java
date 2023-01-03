@@ -12,7 +12,7 @@ import java.util.List;
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @JsonIgnore
     @OneToOne
@@ -20,8 +20,12 @@ public class Quiz {
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "quiz", fetch = FetchType.EAGER)
     private List<QuizProblem> quizProblems = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "quiz")
+    private List<QuizGradeBook> quizGradeBooks = new ArrayList<>();
 
     public Quiz() {
 

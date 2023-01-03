@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class QuizProblem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @JsonIgnore
     @ManyToOne

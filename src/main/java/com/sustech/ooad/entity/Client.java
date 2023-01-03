@@ -68,6 +68,9 @@ public class Client {
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "student")
+    private List<QuizGradeBook> quizGradeBooks = new ArrayList<>();
 
 
     public Client() {
