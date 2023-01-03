@@ -78,7 +78,7 @@ public class CourseController {
         }
     }
 
-    // 订阅
+    // 订阅 即购买
     // http://localhost:8081/api/course/subscribe?courseId=&&clientId=
     @PostMapping("/subscribe")
     @Transactional
@@ -87,6 +87,7 @@ public class CourseController {
         Client client = clientService.getUserById(clientId);
         course.getClientsSubscribed().add(client);
         client.getCoursesSubscribed().add(course);
+
     }
 
     @GetMapping("/list_subscribed")

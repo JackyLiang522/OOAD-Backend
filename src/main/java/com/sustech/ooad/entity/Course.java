@@ -44,10 +44,6 @@ public class Course {
     private List<Client> clientsSubscribed = new ArrayList<>();
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "coursesPurchased")
-    private List<Client> clientsPurchased = new ArrayList<>();
-
-    @JsonIgnore
     @OneToMany(mappedBy = "course")
     private List<Announcement> announcements = new ArrayList<>();
 

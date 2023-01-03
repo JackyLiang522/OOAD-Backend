@@ -43,22 +43,6 @@ public class Client {
     private List<Course> coursesSubscribed = new ArrayList<>();
 
 
-    // 购买课程
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-        name = "purchased",
-        joinColumns = @JoinColumn(
-                name = "client_id",
-                nullable = false,
-                referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(
-                name = "course_id",
-                nullable = false,
-                referencedColumnName = "id"))
-    private List<Course> coursesPurchased = new ArrayList<>();
-
-
     @JsonIgnore
     @OneToMany(mappedBy = "teacher")
     private List<Course> coursesCreated = new ArrayList<>();
@@ -71,6 +55,10 @@ public class Client {
     @JsonIgnore
     @OneToMany(mappedBy = "student")
     private List<QuizGradeBook> quizGradeBooks = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "student")
+    private List<AssignmentGradeBook> assignmentGradeBooks = new ArrayList<>();
 
 
     public Client() {

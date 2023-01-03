@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,7 +19,7 @@ public class Assignment {
 
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     @JoinColumn(
             name = "chapter_id",
             nullable = false,
@@ -26,7 +28,13 @@ public class Assignment {
 
     private String description;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "assignment")
+    private List<AssignmentGradeBook> assignmentGradeBooks = new ArrayList<>();
+
+
     public Assignment() {
+
     }
 
     public Assignment(String description) {

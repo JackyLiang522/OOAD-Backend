@@ -11,5 +11,6 @@ public interface AssignmentService {
 
     void saveAssignment(Assignment assignment);
 
+    Assignment getById(Long assignmentId);
 }
 

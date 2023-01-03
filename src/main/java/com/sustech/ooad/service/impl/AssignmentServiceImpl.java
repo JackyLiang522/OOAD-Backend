@@ -21,5 +21,10 @@ public class AssignmentServiceImpl implements AssignmentService {
         assignmentRepository.save(assignment);
     }
 
+    @Override
+    public Assignment getById(Long assignmentId) {
+        return assignmentRepository.findAssignmentById(assignmentId);
+    }
+
 
 }

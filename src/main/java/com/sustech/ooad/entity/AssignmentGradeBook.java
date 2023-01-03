@@ -1,6 +1,5 @@
 package com.sustech.ooad.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -8,15 +7,19 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "quiz_grade_book")
-public class QuizGradeBook {
+@Table(name = "assignment_grade_book")
+public class AssignmentGradeBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int grade = -1;
-
-    // private boolean isFinish = false;
+    @JsonIgnore
+    @ManyToOne()
+    @JoinColumn(
+            name = "assignment_id",
+            nullable = false,
+            referencedColumnName = "id")
+    private Assignment assignment;
 
     @JsonIgnore
     @ManyToOne()
@@ -26,28 +29,17 @@ public class QuizGradeBook {
             referencedColumnName = "id")
     private Client student;
 
-    @JsonIgnore
-    @ManyToOne()
-    @JoinColumn(
-            name = "quiz_id",
-            nullable = false,
-            referencedColumnName = "id")
-    private Quiz quiz;
+    private int grade = -1;
 
+    private boolean isRead = false;
 
-
-    public QuizGradeBook() {
-
-    }
-
-    public QuizGradeBook(int grade, Client student, Quiz quiz) {
-        this.grade = grade;
+    public AssignmentGradeBook(Assignment assignment, Client student, int grade) {
+        this.assignment = assignment;
         this.student = student;
-        this.quiz = quiz;
     }
 
-    public QuizGradeBook(Client student, Quiz quiz) {
-        this.student = student;
-        this.quiz = quiz;
+    public AssignmentGradeBook() {
+
     }
+
 }

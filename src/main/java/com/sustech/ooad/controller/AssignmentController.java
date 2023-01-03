@@ -1,17 +1,11 @@
 package com.sustech.ooad.controller;
 
-import com.sustech.ooad.entity.Assignment;
-import com.sustech.ooad.entity.Chapter;
-import com.sustech.ooad.entity.Course;
-import com.sustech.ooad.service.AssignmentService;
-import com.sustech.ooad.service.ChapterService;
-import com.sustech.ooad.service.CourseService;
+import com.sustech.ooad.entity.*;
+import com.sustech.ooad.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/assignment")
@@ -20,9 +14,14 @@ public class AssignmentController {
     @Autowired
     private AssignmentService assignmentService;
 
+    @Autowired
+    private AssignmentGradeBookService assignmentGradeBookService;
 
     @Autowired
     private ChapterService chapterService;
+
+    @Autowired
+    private ClientService clientService;
 
 
     // http://localhost:8081/api/assignment/list?chapterId=
@@ -43,5 +42,17 @@ public class AssignmentController {
         assignment.setChapter(chapter);
         assignmentService.saveAssignment(assignment);
     }
+
+    // http://localhost:8081/api/assignment/recordGrade?chapterId=&&studentId=&&grade=
+    @PostMapping("/recordGrade")
+    @Transactional
+    public void recordGrade(@RequestParam Long assignmentGradeBookId,  @RequestParam int grade){
+        AssignmentGradeBook assignmentGradeBook = assignmentGradeBookService.getById(assignmentGradeBookId);
+        assignmentGradeBook.setGrade(grade);
+    }
+
+    // 提交作业之后生成 grade book
+    // submit
+
 
 }

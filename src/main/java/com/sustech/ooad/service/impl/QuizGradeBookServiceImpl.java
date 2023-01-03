@@ -1,5 +1,7 @@
 package com.sustech.ooad.service.impl;
 
+import com.sustech.ooad.entity.Client;
+import com.sustech.ooad.entity.Quiz;
 import com.sustech.ooad.entity.QuizGradeBook;
 import com.sustech.ooad.repository.QuizGradeBookRepository;
 import com.sustech.ooad.service.QuizGradeBookService;
@@ -15,5 +17,10 @@ public class QuizGradeBookServiceImpl implements QuizGradeBookService {
     @Override
     public void save(QuizGradeBook quizGradeBook) {
         quizGradeBookRepository.save(quizGradeBook);
+    }
+
+    @Override
+    public QuizGradeBook getByStudentAndQuiz(Client student, Quiz quiz) {
+        return quizGradeBookRepository.findQuizGradeBookByStudentAndQuiz(student, quiz);
     }
 }
