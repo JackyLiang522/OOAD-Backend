@@ -23,6 +23,9 @@ public class UploadController {
     private static final String PDF_FOLDER = "files/pdf/";
     private static final String IMAGE_FOLDER = "files/image/";
 
+    private static final String STUDENT_PDF = "files/studentAssignment/";
+
+    // 视频上传
     @PostMapping("/video")
     public String singleVideoUpload(@RequestParam("file") MultipartFile file,
                                    @RequestParam("chapterId") Long chapterId) {
@@ -41,22 +44,14 @@ public class UploadController {
         }
     }
 
+
     // Set up the endpoint for retrieving stored videos
     @GetMapping("/video/{filename:.+}")
     public ResponseEntity<byte[]> getVideo(@PathVariable String filename) {
-        try {
-            // Retrieve the file from the specified directory
-            Path path = Paths.get(VIDEO_FOLDER + filename);
-            byte[] video = Files.readAllBytes(path);
-
-            // Return the video as the response body
-            return new ResponseEntity<>(video, HttpStatus.OK);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return getFileUtil(filename, VIDEO_FOLDER);
     }
 
+    // 教师上传作业附件
     @PostMapping("/pdf")
     public String singlePDFUpload(@RequestParam("file") MultipartFile file,
                                     @RequestParam("chapterId") Long chapterId) {
@@ -78,9 +73,38 @@ public class UploadController {
     // Set up the endpoint for retrieving stored videos
     @GetMapping("/pdf/{filename:.+}")
     public ResponseEntity<byte[]> getPDF(@PathVariable String filename) {
+        return getFileUtil(filename, PDF_FOLDER);
+    }
+
+
+    @PostMapping("/studentAssignment")
+    public String assignmentUpload(@RequestParam("file") MultipartFile file,
+                                  @RequestParam("chapterId") Long chapterId,
+                                  @RequestParam("studentId") Long studentId) {
+        try {
+            // Save the uploaded file to the specified directory
+            byte[] bytes = file.getBytes();
+            String filename = PDF_FOLDER + chapterId + "_" + studentId +".pdf";
+            File uploadedFile = new File(filename);
+            uploadedFile.createNewFile();
+            java.nio.file.Files.write(uploadedFile.toPath(), bytes);
+            return filename;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error while uploading file";
+        }
+    }
+
+    @GetMapping("/pdf/{filename:.+}")
+    public ResponseEntity<byte[]> getAssignmentPDF(@PathVariable String filename) {
+        return getFileUtil(filename, STUDENT_PDF);
+    }
+
+    private ResponseEntity<byte[]> getFileUtil(@PathVariable String filename, String studentPdf) {
         try {
             // Retrieve the file from the specified directory
-            Path path = Paths.get(PDF_FOLDER + filename);
+            Path path = Paths.get(studentPdf + filename);
             byte[] pdf = Files.readAllBytes(path);
 
             // Return the video as the response body
@@ -91,14 +115,16 @@ public class UploadController {
         }
     }
 
+
+    // 上传课程封面
     @PostMapping("/image")
     public String singleImageUpload(@RequestParam("file") MultipartFile file,
-                                    @RequestParam("chapterId") Long chapterId) {
+                                    @RequestParam("courseId") Long courseId) {
         try {
             // Save the uploaded file to the specified directory
             byte[] bytes = file.getBytes();
             String fileExtension = file.getOriginalFilename().split("\\.")[1];
-            String filename = IMAGE_FOLDER + chapterId + fileExtension;
+            String filename = IMAGE_FOLDER + courseId + fileExtension;
             File uploadedFile = new File(filename);
             uploadedFile.createNewFile();
             java.nio.file.Files.write(uploadedFile.toPath(), bytes);
@@ -113,16 +139,6 @@ public class UploadController {
     // Set up the endpoint for retrieving stored videos
     @GetMapping("/image/{filename:.+}")
     public ResponseEntity<byte[]> getImage(@PathVariable String filename) {
-        try {
-            // Retrieve the file from the specified directory
-            Path path = Paths.get(IMAGE_FOLDER + filename);
-            byte[] image = Files.readAllBytes(path);
-
-            // Return the video as the response body
-            return new ResponseEntity<>(image, HttpStatus.OK);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return getFileUtil(filename, IMAGE_FOLDER);
     }
 }
