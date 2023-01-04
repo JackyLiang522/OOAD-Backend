@@ -25,7 +25,7 @@ public class ChapterController {
     @Transactional
     public List<Chapter> listChaptersByCourseId(@RequestParam Long courseId){
         Course course = courseService.getCourseById(courseId);
-        return chapterService.findChaptersBYCourse(course);
+        return chapterService.findChaptersByCourse(course);
     }
 
     // http://localhost:8081/api/chapter/add?courseId=&&chapterName=

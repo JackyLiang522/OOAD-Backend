@@ -14,7 +14,7 @@ public interface ChapterService {
 
     Chapter save(Chapter chapter);
 
-    List<Chapter> findChaptersBYCourse(Course course);
+    List<Chapter> findChaptersByCourse(Course course);
 
     Chapter getChapterById(Long chapterId);
 }

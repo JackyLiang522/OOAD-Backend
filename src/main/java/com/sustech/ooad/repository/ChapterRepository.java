@@ -13,5 +13,6 @@ public interface ChapterRepository extends JpaRepository<Chapter, Long> {
     @Query("select c from Chapter c where c.id = ?1")
     Chapter findChapterById(Long chapterId);
 
-    List<Chapter> findChaptersByCourse(Course course);
+
+    List<Chapter> findChaptersByCourseOrderById(Course course);
 }

@@ -26,8 +26,8 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
-    public List<Chapter> findChaptersBYCourse(Course course) {
-        return chapterRepository.findChaptersByCourse(course);
+    public List<Chapter> findChaptersByCourse(Course course) {
+        return chapterRepository.findChaptersByCourseOrderById(course);
     }
 
     @Override
