@@ -11,4 +11,6 @@ public interface QuizGradeBookService {
     void save(QuizGradeBook quizGradeBook);
 
     QuizGradeBook getByStudentAndQuiz(Client student, Quiz quiz);
+
+    QuizGradeBook getById(Long id);
 }

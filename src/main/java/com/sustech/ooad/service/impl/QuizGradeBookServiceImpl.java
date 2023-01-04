@@ -23,4 +23,9 @@ public class QuizGradeBookServiceImpl implements QuizGradeBookService {
     public QuizGradeBook getByStudentAndQuiz(Client student, Quiz quiz) {
         return quizGradeBookRepository.findQuizGradeBookByStudentAndQuiz(student, quiz);
     }
+
+    @Override
+    public QuizGradeBook getById(Long id) {
+        return quizGradeBookRepository.findQuizGradeBookById(id);
+    }
 }
