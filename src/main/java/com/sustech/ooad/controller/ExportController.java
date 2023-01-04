@@ -41,11 +41,11 @@ public class ExportController {
     @GetMapping("")
     @Transactional
     @ResponseBody
-    public void excelOutPortChina(HttpServletResponse response, @RequestParam Long courseId, @RequestParam Long chapterId) throws Exception {
+    public void excelOutPortChina(HttpServletResponse response,  @RequestParam Long chapterId) throws Exception {
         List<StudentScore> studentScores = new ArrayList<>();
-        Course course = courseService.getCourseById(courseId);
-        List<Client> students = course.getClientsSubscribed();
         Chapter chapter = chapterService.getChapterById(chapterId);
+        Course course = chapter.getCourse();
+        List<Client> students = course.getClientsSubscribed();
         Quiz quiz = chapter.getQuiz();
         Assignment assignment = chapter.getAssignment();
         for (Client student : students){

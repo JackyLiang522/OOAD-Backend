@@ -66,8 +66,6 @@ public class QuizController {
             problem.setQuiz(quiz);
             quizProblemService.save(problem);
         }
-
-
         return quiz;
     }
 

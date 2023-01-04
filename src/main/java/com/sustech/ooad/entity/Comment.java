@@ -27,7 +27,6 @@ public class Comment {
             referencedColumnName = "id")
     private Client user;
 
-
     private Date createTime;
 
     @JsonIgnore

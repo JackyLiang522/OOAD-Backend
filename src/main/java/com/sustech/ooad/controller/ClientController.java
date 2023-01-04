@@ -38,5 +38,7 @@ public class ClientController {
     public Client getUserById(@RequestParam Long userId) {
         return clientService.getUserById(userId);
     }
+
+
 }
 
