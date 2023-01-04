@@ -49,10 +49,12 @@ public class CommentController {
         return frontComments;
     }
 
+
+
     // http://localhost:8081/api/comment/add?chapterId=&&contents=&&nickname=&&userId=
     @PostMapping("/add")
     @Transactional
-    public Comment add(@RequestParam Long chapterId, @RequestParam String contents, @RequestParam String nickname, @RequestParam long userId){
+    public void add(@RequestParam Long chapterId, @RequestParam String contents, @RequestParam String nickname, @RequestParam long userId){
         Chapter chapter = chapterService.findChapterById(chapterId);
         Client user = clientService.getUserById(userId);
         Comment comment = new Comment(contents, nickname, new Date());
@@ -60,7 +62,7 @@ public class CommentController {
         user.getComments().add(comment);
         comment.setChapter(chapter);
         comment.setUser(user);
-        return commentService.save(comment);
+        commentService.save(comment);
     }
 
     // http://localhost:8081/api/comment/delete?userId=&&commentId=
