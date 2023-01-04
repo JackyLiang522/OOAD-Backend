@@ -48,7 +48,9 @@ public class CourseController {
     @Transactional
     public List<Course> listCourseByTeacher(@RequestParam Long teacherId) {
         Client teacher = clientService.getUserById(teacherId);
-        return courseService.getCourseByTeacher(teacher);
+        return courseService.getCourseByTeacher(teacher).stream()
+            .filter(course -> course.getStatus() == 1)
+            .collect(Collectors.toList());
     }
 
     // http://localhost:8081/api/course/list_by_id?courseId=
@@ -110,7 +112,9 @@ public class CourseController {
     @Transactional
     public List<Course> listSubscribed(@RequestParam Long clientId) {
         Client client = clientService.getUserById(clientId);
-        return client.getCoursesSubscribed();
+        return client.getCoursesSubscribed().stream()
+            .filter(course -> course.getStatus() == 1)
+            .collect(Collectors.toList());
     }
 }
 
