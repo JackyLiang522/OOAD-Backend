@@ -34,12 +34,12 @@ public class AssignmentController {
         return chapter.getAssignment();
     }
 
-    // http://localhost:8081/api/assignment/add?chapterId=&&description=
+    // http://localhost:8081/api/assignment/add?chapterId=&&title=&&deadline=
     @PostMapping("/add")
     @Transactional
-    public void addAssignment(@RequestParam Long chapterId, @RequestParam String description, @RequestParam Date ddl){
+    public void addAssignment(@RequestParam Long chapterId, @RequestParam String title, @RequestParam Date deadline){
         Chapter chapter = chapterService.findChapterById(chapterId);
-        Assignment assignment = new Assignment(description, ddl);
+        Assignment assignment = new Assignment(title, deadline);
         chapter.setAssignment(assignment);
         assignment.setChapter(chapter);
         assignmentService.saveAssignment(assignment);

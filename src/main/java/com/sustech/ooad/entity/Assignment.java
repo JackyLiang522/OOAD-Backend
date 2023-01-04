@@ -27,21 +27,21 @@ public class Assignment {
             referencedColumnName = "id")
     private Chapter chapter;
 
-    private String description;
+    private String title;
 
     @JsonIgnore
     @OneToMany(mappedBy = "assignment")
     private List<AssignmentGradeBook> assignmentGradeBooks = new ArrayList<>();
 
-    private Date ddl;
+    private Date deadline;
 
 
     public Assignment() {
 
     }
 
-    public Assignment(String description, Date ddl) {
-        this.description = description;
-        this.ddl = ddl;
+    public Assignment(String title, Date deadline) {
+        this.title = title;
+        this.deadline = deadline;
     }
 }

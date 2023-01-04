@@ -37,6 +37,8 @@ public class AnnouncementController {
         course.getAnnouncements().add(announcement);
         announcement.setCourse(course);
         announcementService.save(announcement);
-
     }
 }
+
+
+
