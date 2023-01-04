@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -32,12 +33,15 @@ public class Assignment {
     @OneToMany(mappedBy = "assignment")
     private List<AssignmentGradeBook> assignmentGradeBooks = new ArrayList<>();
 
+    private Date ddl;
+
 
     public Assignment() {
 
     }
 
-    public Assignment(String description) {
+    public Assignment(String description, Date ddl) {
         this.description = description;
+        this.ddl = ddl;
     }
 }

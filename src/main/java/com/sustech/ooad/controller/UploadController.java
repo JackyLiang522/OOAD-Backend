@@ -96,7 +96,7 @@ public class UploadController {
         }
     }
 
-    @GetMapping("/pdf/{filename:.+}")
+    @GetMapping("/studentAssignment/{filename:.+}")
     public ResponseEntity<byte[]> getAssignmentPDF(@PathVariable String filename) {
         return getFileUtil(filename, STUDENT_PDF);
     }

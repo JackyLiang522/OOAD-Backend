@@ -33,7 +33,7 @@ public class AssignmentGradeBook {
 
     private boolean isRead = false;
 
-    public AssignmentGradeBook(Assignment assignment, Client student, int grade) {
+    public AssignmentGradeBook(Assignment assignment, Client student) {
         this.assignment = assignment;
         this.student = student;
     }
