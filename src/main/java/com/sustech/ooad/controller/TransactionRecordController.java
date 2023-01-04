@@ -53,12 +53,13 @@ public class TransactionRecordController {
     // 充值
     @PostMapping("/recharge")
     @Transactional
-    public void recharge(@RequestParam Long clientId, @RequestParam int change){
+    public int recharge(@RequestParam Long clientId, @RequestParam int change){
         Client client = clientService.getUserById(clientId);
         TransactionRecord record = new TransactionRecord(client.getAccount()+change, change, client, new Date(),null);
+        transactionRecordService.save(record);
         client.setAccount(client.getAccount() + change);
         client.getTransactionRecords().add(record);
-        transactionRecordService.save(record);
+        return client.getAccount();
 
     }
 
