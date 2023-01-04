@@ -2,6 +2,13 @@ package com.sustech.ooad.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,20 +20,109 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadController {
 
     private static final String VIDEO_FOLDER = "files/video/";
+    private static final String PDF_FOLDER = "files/pdf/";
+    private static final String IMAGE_FOLDER = "files/image/";
 
     @PostMapping("/video")
-    public String singleFileUpload(@RequestParam("file") MultipartFile file) {
+    public String singleVideoUpload(@RequestParam("file") MultipartFile file,
+                                   @RequestParam("chapterId") Long chapterId) {
         try {
             // Save the uploaded file to the specified directory
             byte[] bytes = file.getBytes();
-            File uploadedFile = new File(VIDEO_FOLDER + file.getOriginalFilename());
+            String filename = VIDEO_FOLDER + chapterId + ".mp4";
+            File uploadedFile = new File(filename);
             uploadedFile.createNewFile();
             java.nio.file.Files.write(uploadedFile.toPath(), bytes);
-            return VIDEO_FOLDER + file.getOriginalFilename();
+            return filename;
 
         } catch (IOException e) {
             e.printStackTrace();
             return "Error while uploading file";
+        }
+    }
+
+    // Set up the endpoint for retrieving stored videos
+    @GetMapping("/video/{filename:.+}")
+    public ResponseEntity<byte[]> getVideo(@PathVariable String filename) {
+        try {
+            // Retrieve the file from the specified directory
+            Path path = Paths.get(VIDEO_FOLDER + filename);
+            byte[] video = Files.readAllBytes(path);
+
+            // Return the video as the response body
+            return new ResponseEntity<>(video, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/pdf")
+    public String singlePDFUpload(@RequestParam("file") MultipartFile file,
+                                    @RequestParam("chapterId") Long chapterId) {
+        try {
+            // Save the uploaded file to the specified directory
+            byte[] bytes = file.getBytes();
+            String filename = PDF_FOLDER + chapterId + ".pdf";
+            File uploadedFile = new File(filename);
+            uploadedFile.createNewFile();
+            java.nio.file.Files.write(uploadedFile.toPath(), bytes);
+            return filename;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error while uploading file";
+        }
+    }
+
+    // Set up the endpoint for retrieving stored videos
+    @GetMapping("/pdf/{filename:.+}")
+    public ResponseEntity<byte[]> getPDF(@PathVariable String filename) {
+        try {
+            // Retrieve the file from the specified directory
+            Path path = Paths.get(PDF_FOLDER + filename);
+            byte[] pdf = Files.readAllBytes(path);
+
+            // Return the video as the response body
+            return new ResponseEntity<>(pdf, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/image")
+    public String singleImageUpload(@RequestParam("file") MultipartFile file,
+                                    @RequestParam("chapterId") Long chapterId) {
+        try {
+            // Save the uploaded file to the specified directory
+            byte[] bytes = file.getBytes();
+            String fileExtension = file.getOriginalFilename().split("\\.")[1];
+            String filename = IMAGE_FOLDER + chapterId + fileExtension;
+            File uploadedFile = new File(filename);
+            uploadedFile.createNewFile();
+            java.nio.file.Files.write(uploadedFile.toPath(), bytes);
+            return filename;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error while uploading file";
+        }
+    }
+
+    // Set up the endpoint for retrieving stored videos
+    @GetMapping("/image/{filename:.+}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String filename) {
+        try {
+            // Retrieve the file from the specified directory
+            Path path = Paths.get(IMAGE_FOLDER + filename);
+            byte[] image = Files.readAllBytes(path);
+
+            // Return the video as the response body
+            return new ResponseEntity<>(image, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
