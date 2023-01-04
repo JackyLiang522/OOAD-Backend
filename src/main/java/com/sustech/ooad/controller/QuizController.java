@@ -99,6 +99,13 @@ public class QuizController {
         quizGradeBookService.save(quizGradeBook);
     }
 
+    @PostMapping("/updateGrade")
+    @Transactional
+    public void updateGrade(@RequestParam Long quizGradeBookId, @RequestParam int grade){
+        QuizGradeBook quizGradeBook = quizGradeBookService.getById(quizGradeBookId);
+        quizGradeBook.setGrade(grade);
+    }
+
 }
 
 @Setter
