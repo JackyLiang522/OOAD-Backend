@@ -6,10 +6,15 @@ import com.sustech.ooad.entity.Comment;
 import com.sustech.ooad.service.ChapterService;
 import com.sustech.ooad.service.ClientService;
 import com.sustech.ooad.service.CommentService;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,9 +35,18 @@ public class CommentController {
 
     // http://localhost:8081/api/comment/list?chapterId=
     @GetMapping("/list")
-    public List<Comment> list(@RequestParam Long chapterId) {
+    public List<FrontComment> list(@RequestParam Long chapterId) {
         Chapter chapter = chapterService.findChapterById(chapterId);
-        return commentService.findCommentsByChapter(chapter);
+        List<Comment> comments = commentService.findCommentsByChapter(chapter);
+        List<FrontComment> frontComments = new ArrayList<>();
+        for (Comment c : comments){
+            FrontComment frontComment = new FrontComment();
+            frontComment.setContents(c.getContents());
+            frontComment.setNickname(c.getNickname());
+            frontComment.setCreateTime(c.getCreateTime().toString());
+            frontComments.add(frontComment);
+        }
+        return frontComments;
     }
 
     // http://localhost:8081/api/comment/add?chapterId=&&contents=&&nickname=&&userId=
@@ -65,4 +79,13 @@ public class CommentController {
 
 }
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+class FrontComment{
+    private String nickname;
+    private String contents;
+    private String createTime;
+}
 
