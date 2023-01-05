@@ -41,9 +41,9 @@ public class ChapterController {
 
     @PutMapping("/update")
     @Transactional
-    public Chapter updateChapter(@RequestParam Long chapterId, @RequestParam String chapterName) {
+    public void updateChapter(@RequestParam Long chapterId, @RequestParam String chapterName) {
         Chapter chapter = chapterService.getChapterById(chapterId);
         chapter.setName(chapterName);
-        return chapterService.save(chapter);
     }
+
 }

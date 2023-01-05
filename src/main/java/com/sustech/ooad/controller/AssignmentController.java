@@ -2,10 +2,16 @@ package com.sustech.ooad.controller;
 
 import com.sustech.ooad.entity.*;
 import com.sustech.ooad.service.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -29,20 +35,36 @@ public class AssignmentController {
     // http://localhost:8081/api/assignment/list?chapterId=
     @GetMapping("/list")
     @Transactional
-    public Assignment getAssignmentsByChapterId(@RequestParam Long chapterId){
+    public FrontAssignment getAssignmentsByChapterId(@RequestParam Long chapterId){
         Chapter chapter = chapterService.findChapterById(chapterId);
-        return chapter.getAssignment();
+        Assignment assignment = chapter.getAssignment();
+        FrontAssignment frontAssignment = new FrontAssignment();
+        frontAssignment.setTitle(assignment.getTitle());
+        Date date = assignment.getDeadline();
+        SimpleDateFormat sformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//日期格式
+        String ddl = sformat.format(date);
+        frontAssignment.setDeadline(ddl);
+        return frontAssignment;
     }
 
     // http://localhost:8081/api/assignment/add?chapterId=&&title=&&deadline=
     @PostMapping("/add")
     @Transactional
-    public void addAssignment(@RequestParam Long chapterId, @RequestParam String title, @RequestParam Date deadline){
+    public void addAssignment(@RequestParam Long chapterId, @RequestParam String title, @RequestParam String deadline) throws ParseException {
         Chapter chapter = chapterService.findChapterById(chapterId);
-        Assignment assignment = new Assignment(title, deadline);
-        chapter.setAssignment(assignment);
-        assignment.setChapter(chapter);
-        assignmentService.saveAssignment(assignment);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
+        Date date = sdf.parse(deadline);
+        if (chapter.getAssignment() == null){
+            Assignment assignment = new Assignment(title, date);
+            chapter.setAssignment(assignment);
+            assignment.setChapter(chapter);
+            assignmentService.saveAssignment(assignment);
+        } else {
+            Assignment assignment = chapter.getAssignment();
+            assignment.setTitle(title);
+            assignment.setDeadline(date);
+        }
+
     }
 
     // http://localhost:8081/api/assignment/recordGrade?chapterId=&&studentId=&&grade=
@@ -74,4 +96,12 @@ public class AssignmentController {
 
 }
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+class FrontAssignment{
+    private String title;
+    private String deadline;
+}
 

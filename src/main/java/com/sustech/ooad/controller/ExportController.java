@@ -42,33 +42,7 @@ public class ExportController {
     @Transactional
     @ResponseBody
     public void excelOutPortChina(HttpServletResponse response,  @RequestParam Long chapterId) throws Exception {
-        List<StudentScore> studentScores = new ArrayList<>();
-        Chapter chapter = chapterService.getChapterById(chapterId);
-        Course course = chapter.getCourse();
-        List<Client> students = course.getClientsSubscribed();
-        Quiz quiz = chapter.getQuiz();
-        Assignment assignment = chapter.getAssignment();
-        for (Client student : students){
-            StudentScore studentScore = new StudentScore();
-            studentScore.setName(student.getName());
-
-            QuizGradeBook quizGradeBook = quizGradeBookService.getByStudentAndQuiz(student, quiz);
-            if (quizGradeBook == null){
-                studentScore.setQuiz("未完成");
-            } else {
-                studentScore.setQuiz(String.valueOf(quizGradeBook.getGrade()));
-            }
-
-            AssignmentGradeBook assignmentGradeBook = assignmentGradeBookService.getByStudentAndAssignment(student, assignment);
-            if (assignmentGradeBook == null){
-                studentScore.setAssignment("未提交");
-            } else if (assignmentGradeBook.isRead()){
-                studentScore.setAssignment(String.valueOf(assignmentGradeBook.getGrade()));
-            } else {
-                studentScore.setAssignment("未批改");
-            }
-            studentScores.add(studentScore);
-        }
+        List<StudentScore> studentScores = util(chapterId);
         response.setCharacterEncoding("UTF-8");
         HSSFWorkbook wb = new HSSFWorkbook();
         HSSFSheet sheet = wb.createSheet("成绩单");
@@ -80,8 +54,8 @@ public class ExportController {
         for (StudentScore data : studentScores){
             HSSFRow dataRow = sheet.createRow(sheet.getLastRowNum()+1);
             dataRow.createCell(0).setCellValue(data.getName());
-            dataRow.createCell(1).setCellValue(data.getQuiz());
-            dataRow.createCell(2).setCellValue(data.getAssignment());
+            dataRow.createCell(1).setCellValue(data.getQuiz_score());
+            dataRow.createCell(2).setCellValue(data.getHomework_score());
         }
         // 建立输出流，输出浏览器文件
         OutputStream os = null;
@@ -94,6 +68,45 @@ public class ExportController {
         os.close();
 
     }
+
+
+    @GetMapping("/list")
+    @Transactional
+    public List<StudentScore> getStudentScore(@RequestParam Long chapterId){
+        return util(chapterId);
+    }
+
+
+    private List<StudentScore> util(Long chapterId){
+        List<StudentScore> studentScores = new ArrayList<>();
+        Chapter chapter = chapterService.getChapterById(chapterId);
+        Course course = chapter.getCourse();
+        List<Client> students = course.getClientsSubscribed();
+        Quiz quiz = chapter.getQuiz();
+        Assignment assignment = chapter.getAssignment();
+        for (Client student : students){
+            StudentScore studentScore = new StudentScore();
+            studentScore.setName(student.getName());
+
+            QuizGradeBook quizGradeBook = quizGradeBookService.getByStudentAndQuiz(student, quiz);
+            if (quizGradeBook == null){
+                studentScore.setQuiz_score("未完成");
+            } else {
+                studentScore.setQuiz_score(String.valueOf(quizGradeBook.getGrade()));
+            }
+
+            AssignmentGradeBook assignmentGradeBook = assignmentGradeBookService.getByStudentAndAssignment(student, assignment);
+            if (assignmentGradeBook == null){
+                studentScore.setHomework_score("未提交");
+            } else if (assignmentGradeBook.isRead()){
+                studentScore.setHomework_score(String.valueOf(assignmentGradeBook.getGrade()));
+            } else {
+                studentScore.setHomework_score("未批改");
+            }
+            studentScores.add(studentScore);
+        }
+        return studentScores;
+    }
 }
 
 @Setter
@@ -102,6 +115,6 @@ public class ExportController {
 @AllArgsConstructor
 class StudentScore{
     private String name;
-    private String quiz;
-    private String assignment;
+    private String quiz_score;
+    private String homework_score;
 }
