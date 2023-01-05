@@ -2,8 +2,11 @@ package com.sustech.ooad.controller;
 
 import com.sustech.ooad.entity.Client;
 import com.sustech.ooad.service.ClientService;
+import com.sustech.ooad.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/client")
@@ -11,6 +14,9 @@ public class ClientController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private CourseService courseService;
 
     // http://localhost:8081/api/client/login?email=&&password=
     @PostMapping(value = "/login")
@@ -40,5 +46,9 @@ public class ClientController {
     }
 
 
+    @GetMapping("/getByCourse")
+    public List<Client> getByCourse(@RequestParam Long courseId){
+        return courseService.getCourseById(courseId).getClientsSubscribed();
+    }
 }
 

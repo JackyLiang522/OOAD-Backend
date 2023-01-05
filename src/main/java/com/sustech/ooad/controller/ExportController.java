@@ -129,6 +129,36 @@ public class ExportController {
             }
         }
     }
+
+
+    @GetMapping("/studentData")
+    @Transactional
+    @ResponseBody
+    public void excelOutStudentData(HttpServletResponse response, @RequestParam Long courseId) throws Exception {
+        List<Client> studentScores = courseService.getCourseById(courseId).getClientsSubscribed();
+        response.setCharacterEncoding("UTF-8");
+        HSSFWorkbook wb = new HSSFWorkbook();
+        HSSFSheet sheet = wb.createSheet("学生信息表");
+        // 创建表头
+        HSSFRow hssfRow = sheet.createRow(0);
+        hssfRow.createCell(0).setCellValue("学生姓名");
+        hssfRow.createCell(1).setCellValue("学生邮箱");
+        for (Client data : studentScores){
+            HSSFRow dataRow = sheet.createRow(sheet.getLastRowNum()+1);
+            dataRow.createCell(0).setCellValue(data.getName());
+            dataRow.createCell(1).setCellValue(data.getEmail());
+        }
+        // 建立输出流，输出浏览器文件
+        OutputStream os = null;
+        response.setContentType("application/octet-stream;charset=utf-8");
+        response.setHeader("Content-Disposition","attachment;filename=" + new String("学生信息".getBytes(), StandardCharsets.ISO_8859_1) + ".xls");
+        // 输出文件
+        os = response.getOutputStream();
+        wb.write(os);
+        os.flush();
+        os.close();
+    }
+
 }
 
 @Setter
@@ -142,4 +172,13 @@ class StudentScore{
     private String homework_score;
     private Long quiz_gradebook_id;
     private Long homework_gradebook_id;
+}
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+class StudentMessage{
+    private String name;
+    private String email;
 }
