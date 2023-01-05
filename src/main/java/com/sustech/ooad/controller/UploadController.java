@@ -1,5 +1,6 @@
 package com.sustech.ooad.controller;
 
+import com.sustech.ooad.utils.VideoUtil;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,15 +29,24 @@ public class UploadController {
     // 视频上传
     @PostMapping("/video")
     public String singleVideoUpload(@RequestParam("file") MultipartFile file,
-                                   @RequestParam("chapterId") Long chapterId) {
+                                    @RequestParam("chapterId") Long chapterId) {
         try {
             // Save the uploaded file to the specified directory
             byte[] bytes = file.getBytes();
-            String filename = VIDEO_FOLDER + chapterId + ".mp4";
-            File uploadedFile = new File(filename);
+            String originalFilename = VIDEO_FOLDER + chapterId + ".mp4";
+            File uploadedFile = new File(originalFilename);
             uploadedFile.createNewFile();
             java.nio.file.Files.write(uploadedFile.toPath(), bytes);
-            return filename;
+
+            // Rescaling videos
+            int resolution = VideoUtil.getResolution(originalFilename);
+            int[] resolutions = {240, 360, 480, 720};
+            for (int r: resolutions) {
+                if (r <= resolution) {
+                    VideoUtil.changeResolution(originalFilename, r);
+                }
+            }
+            return "Successfully uploaded video";
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -141,4 +151,5 @@ public class UploadController {
     public ResponseEntity<byte[]> getImage(@PathVariable String filename) {
         return getFileUtil(filename, IMAGE_FOLDER);
     }
+
 }

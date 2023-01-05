@@ -78,6 +78,13 @@
 			<artifactId>javax.mail</artifactId>
 			<version>1.4.4</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.bramp.ffmpeg/ffmpeg -->
+		<dependency>
+			<groupId>net.bramp.ffmpeg</groupId>
+			<artifactId>ffmpeg</artifactId>
+			<version>0.7.0</version>
+		</dependency>
+
 
 	</dependencies>
 
