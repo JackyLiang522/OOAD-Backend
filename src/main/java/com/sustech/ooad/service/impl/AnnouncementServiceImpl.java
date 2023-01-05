@@ -28,6 +28,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public List<Announcement> getAnnouncementByCourse(Course course) {
-        return announcementRepository.findAnnouncementsByCourse(course);
+        return announcementRepository.findAnnouncementsByCourseOrderByTimeDesc(course);
     }
 }

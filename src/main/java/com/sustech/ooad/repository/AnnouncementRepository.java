@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface AnnouncementRepository extends JpaRepository<Announcement, Long> {
 
 
-    List<Announcement> findAnnouncementsByCourse(Course course);
+
+    List<Announcement> findAnnouncementsByCourseOrderByTimeDesc(Course course);
 
 }
