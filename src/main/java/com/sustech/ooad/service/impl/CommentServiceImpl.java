@@ -60,6 +60,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> findCommentsByChapter(Chapter chapter) {
-        return commentRepository.findCommentsByChapter(chapter);
+        return commentRepository.findCommentByChapterOrderByCreateTimeDesc(chapter);
     }
 }
