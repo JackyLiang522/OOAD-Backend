@@ -94,6 +94,36 @@ public class AssignmentController {
         }
     }
 
+    @GetMapping("/showHomeWork")
+    @Transactional
+    public FrontHomeWork showHomeWork(@RequestParam long chapterId, @RequestParam long studentId){
+        Chapter chapter = chapterService.getChapterById(chapterId);
+        Client student = clientService.getUserById(studentId);
+        Assignment assignment = chapter.getAssignment();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (assignment != null){
+            FrontHomeWork frontHomeWork = new FrontHomeWork();
+            frontHomeWork.setTitle(assignment.getTitle());
+            frontHomeWork.setDeadline(sdf.format(assignment.getDeadline()));
+            AssignmentGradeBook assignmentGradeBook = assignmentGradeBookService.getByStudentAndAssignment(student, assignment);
+            if (assignmentGradeBook != null){
+                if (assignmentGradeBook.isRead()){
+                    frontHomeWork.setScore(String.valueOf(assignmentGradeBook.getGrade()));
+                    frontHomeWork.setState("已完成");
+                } else {
+                    frontHomeWork.setScore("");
+                    frontHomeWork.setState("未批改");
+                }
+            } else {
+                frontHomeWork.setScore("");
+                frontHomeWork.setState("未提交");
+            }
+            return frontHomeWork;
+        } else {
+            return null;
+        }
+
+    }
 }
 
 @Getter
@@ -105,3 +135,14 @@ class FrontAssignment{
     private String deadline;
 }
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+class FrontHomeWork{
+    private String title;
+    private String deadline;
+    private String state;
+    private String score;
+}

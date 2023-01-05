@@ -141,4 +141,5 @@ public class UploadController {
     public ResponseEntity<byte[]> getImage(@PathVariable String filename) {
         return getFileUtil(filename, IMAGE_FOLDER);
     }
+
 }
