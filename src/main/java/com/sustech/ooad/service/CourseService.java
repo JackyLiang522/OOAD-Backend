@@ -12,7 +12,7 @@ public interface CourseService {
 
     public Course getCourseById(Long courseId);
 
-    public void addCourse(Client tea, String teacher, String introduction, int price);
+    public Course addCourse(Client tea, String teacher, String introduction, int price);
 
     public void updateCourseStatus(Long courseId, int status);
 

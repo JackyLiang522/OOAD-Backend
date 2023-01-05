@@ -124,7 +124,7 @@ public class UploadController {
             // Save the uploaded file to the specified directory
             byte[] bytes = file.getBytes();
             String fileExtension = file.getOriginalFilename().split("\\.")[1];
-            String filename = IMAGE_FOLDER + courseId + fileExtension;
+            String filename = IMAGE_FOLDER + courseId + "." + fileExtension;
             File uploadedFile = new File(filename);
             uploadedFile.createNewFile();
             java.nio.file.Files.write(uploadedFile.toPath(), bytes);

@@ -67,9 +67,10 @@ public class CourseController {
     // http://localhost:8081/api/course/add?teacher=&&name=&&introduction=&&price=
     @PostMapping("/add")
     @Transactional
-    public void addCourse(@RequestParam long teacher, @RequestParam String name, @RequestParam String introduction, @RequestParam int price) {
+    public long addCourse(@RequestParam long teacher, @RequestParam String name, @RequestParam String introduction, @RequestParam int price) {
         Client tea = clientService.getUserById(teacher);
-        courseService.addCourse(tea, name, introduction, price);
+        Course c = courseService.addCourse(tea, name, introduction, price);
+        return c.getId();
     }
 
 

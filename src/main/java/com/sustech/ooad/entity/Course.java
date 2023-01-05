@@ -62,4 +62,5 @@ public class Course {
         this.introduction = introduction;
         this.price = price;
     }
+
 }

@@ -66,7 +66,6 @@ public class ExportController {
         wb.write(os);
         os.flush();
         os.close();
-
     }
 
 
@@ -87,6 +86,7 @@ public class ExportController {
         for (Client student : students){
             StudentScore studentScore = new StudentScore();
             studentScore.setName(student.getName());
+            studentScore.setId(student.getId());
 
             QuizGradeBook quizGradeBook = quizGradeBookService.getByStudentAndQuiz(student, quiz);
             if (quizGradeBook == null){
@@ -114,6 +114,7 @@ public class ExportController {
 @NoArgsConstructor
 @AllArgsConstructor
 class StudentScore{
+    private Long id;
     private String name;
     private String quiz_score;
     private String homework_score;
