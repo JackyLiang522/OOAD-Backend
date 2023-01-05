@@ -400,49 +400,49 @@ public class InitializeUtil {
         TransactionRecord record1_stu1 = new TransactionRecord(
                 10,
                 10,
-                student1,
+                teacher1,
                 calendar_record1.getTime(),
                 ""
         ),
                 record2_stu1 = new TransactionRecord(
                         20,
                         10,
-                        student1,
+                        teacher1,
                         calendar_record2.getTime(),
                         ""
                 ),
                 record3_stu1 = new TransactionRecord(
                         20,
                         -10,
-                        student1,
+                        teacher1,
                         calendar_record3.getTime(),
                         "人工智能导论"
                 ),
                 record4_stu1 = new TransactionRecord(
                         30,
                         10,
-                        student1,
+                        teacher1,
                         calendar_record4.getTime(),
                         ""
                 ),
                 record5_stu1 = new TransactionRecord(
                         30,
                         0,
-                        student1,
+                        teacher1,
                         calendar_record5.getTime(),
                         "面向对象设计与分析"
                 );
         transactionRecordRepository.saveAll(Arrays.asList(
                 record1_stu1, record2_stu1, record3_stu1, record4_stu1, record5_stu1
         ));
-        student1.getTransactionRecords().addAll(Arrays.asList(
+        teacher1.getTransactionRecords().addAll(Arrays.asList(
                 record1_stu1,
                 record2_stu1,
                 record3_stu1,
                 record4_stu1,
                 record5_stu1
         ));
-        student1.getCoursesSubscribed().addAll(Arrays.asList(course1, course2));
+        teacher1.getCoursesSubscribed().addAll(Arrays.asList(course1, course2));
         course1.getClientsSubscribed().add(student1);
         course2.getClientsSubscribed().add(student1);
     }
