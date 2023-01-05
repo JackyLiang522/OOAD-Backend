@@ -91,10 +91,15 @@ public class QuizController {
         Chapter chapter = chapterService.getChapterById(chapterId);
         Quiz quiz = chapter.getQuiz();
         Client student = clientService.getUserById(studentId);
-        QuizGradeBook quizGradeBook = new QuizGradeBook((int)grade, student, quiz);
-        student.getQuizGradeBooks().add(quizGradeBook);
-        quiz.getQuizGradeBooks().add(quizGradeBook);
-        quizGradeBookService.save(quizGradeBook);
+        QuizGradeBook book = quizGradeBookService.getByStudentAndQuiz(student,quiz);
+        if (book == null){
+            QuizGradeBook quizGradeBook = new QuizGradeBook((int)grade, student, quiz);
+            student.getQuizGradeBooks().add(quizGradeBook);
+            quiz.getQuizGradeBooks().add(quizGradeBook);
+            quizGradeBookService.save(quizGradeBook);
+        } else {
+            book.setGrade((int)grade);
+        }
     }
 
     @PostMapping("/updateGrade")
