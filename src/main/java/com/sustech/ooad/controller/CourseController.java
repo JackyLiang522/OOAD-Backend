@@ -1,17 +1,20 @@
 package com.sustech.ooad.controller;
 
 
-import com.sustech.ooad.entity.Client;
-import com.sustech.ooad.entity.Course;
-import com.sustech.ooad.entity.TransactionRecord;
-import com.sustech.ooad.service.ClientService;
-import com.sustech.ooad.service.CourseService;
+import com.sustech.ooad.entity.*;
+import com.sustech.ooad.service.*;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.sustech.ooad.service.TransactionRecordService;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import net.bytebuddy.implementation.bind.annotation.AllArguments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,12 @@ public class CourseController {
 
     @Autowired
     private TransactionRecordService transactionRecordService;
+
+    @Autowired
+    private AssignmentGradeBookService assignmentGradeBookService;
+
+    @Autowired
+    private QuizGradeBookService quizGradeBookService;
 
     @GetMapping("/list")
     public List<Course> list() {
@@ -117,5 +126,89 @@ public class CourseController {
             .filter(course -> course.getStatus() == 1)
             .collect(Collectors.toList());
     }
+
+
+    @GetMapping("/listHwData")
+    @Transactional
+    public List<HwData> listHwData(@RequestParam Long courseId, @RequestParam Long studentId){
+        List<HwData> hwDataList = new ArrayList<>();
+        List<Chapter> chapters = courseService.getCourseById(courseId).getChapters();
+        Client student = clientService.getUserById(studentId);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for (Chapter chapter : chapters){
+            Assignment assignment = chapter.getAssignment();
+            if (assignment != null){
+                HwData hwData = new HwData();
+                hwData.setTitle(chapter.getName());
+                hwData.setChapterId(String.valueOf(chapter.getId()));
+                hwData.setDate(sdf.format(assignment.getDeadline()));
+                AssignmentGradeBook assignmentGradeBook = assignmentGradeBookService.getByStudentAndAssignment(student, assignment);
+                if (assignmentGradeBook == null){
+                    hwData.setState("未完成");
+                    hwData.setScore("-");
+                } else if (!assignmentGradeBook.isRead()){
+                    hwData.setState("未批改");
+                    hwData.setScore("-");
+                } else {
+                    hwData.setState("已完成");
+                    hwData.setScore(String.valueOf(assignmentGradeBook.getGrade()));
+                }
+                hwDataList.add(hwData);
+            }
+        }
+        return hwDataList;
+    }
+
+
+    @GetMapping("/listPgData")
+    @Transactional
+    public List<HwData> listPgData(@RequestParam Long courseId, @RequestParam Long studentId){
+        Course course = courseService.getCourseById(courseId);
+        Client student = clientService.getUserById(studentId);
+        List<Chapter> chapters = course.getChapters();
+        List<HwData> hwDataList = new ArrayList<>();
+        for (Chapter chapter : chapters){
+            Quiz quiz = chapter.getQuiz();
+            if (quiz != null){
+                HwData hwData = new HwData();
+                hwData.setTitle(chapter.getName());
+                QuizGradeBook quizGradeBook = quizGradeBookService.getByStudentAndQuiz(student, quiz);
+                if (quizGradeBook != null){
+                    hwData.setScore(String.valueOf(quizGradeBook.getGrade()));
+                    Assignment assignment = chapter.getAssignment();
+                    if (assignment != null){
+                        AssignmentGradeBook assignmentGradeBook = assignmentGradeBookService.getByStudentAndAssignment(student,assignment);
+                        if (assignmentGradeBook != null && assignmentGradeBook.isRead()){
+                            hwData.setState("已完成");
+                        } else {
+                            hwData.setState("未完成");
+                        }
+                    } else {
+                        hwData.setState("未完成");
+                    }
+                } else {
+                    hwData.setState("未完成");
+                    hwData.setScore("-");
+                }
+
+                hwDataList.add(hwData);
+            }
+        }
+        return hwDataList;
+    }
 }
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+class HwData{
+    private String title;
+    private String state;
+    private String date;
+    private String score;
+    private String chapterId;
+
+}
+
 

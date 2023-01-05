@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,11 +40,12 @@ public class CommentController {
         Chapter chapter = chapterService.findChapterById(chapterId);
         List<Comment> comments = commentService.findCommentsByChapter(chapter);
         List<FrontComment> frontComments = new ArrayList<>();
+        SimpleDateFormat sformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//日期格式
         for (Comment c : comments){
             FrontComment frontComment = new FrontComment();
             frontComment.setContents(c.getContents());
             frontComment.setNickname(c.getNickname());
-            frontComment.setCreateTime(c.getCreateTime().toString());
+            frontComment.setCreateTime(sformat.format(c.getCreateTime()));
             frontComments.add(frontComment);
         }
         return frontComments;
