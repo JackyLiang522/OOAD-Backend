@@ -4,6 +4,7 @@ import com.sustech.ooad.entity.*;
 import com.sustech.ooad.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -32,6 +33,7 @@ public class InitializeUtil {
     @Autowired
     private TransactionRecordRepository transactionRecordRepository;
 
+    @Transactional
     public void initialize() {
         Client teacher1 = new Client("林雨航", "12010903@mail.sustech.edu.cn", "123", true, false),
                 teacher2 = new Client("曾宪清", "12012338@mail.sustech.edu.cn", "123", true, false),
