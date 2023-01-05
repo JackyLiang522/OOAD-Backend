@@ -3,6 +3,7 @@ package com.sustech.ooad.controller;
 import com.sustech.ooad.entity.Announcement;
 import com.sustech.ooad.entity.Course;
 import com.sustech.ooad.service.AnnouncementService;
+import com.sustech.ooad.utils.EmailUtil;
 import java.util.List;
 
 import com.sustech.ooad.service.CourseService;
@@ -37,6 +38,14 @@ public class AnnouncementController {
         course.getAnnouncements().add(announcement);
         announcement.setCourse(course);
         announcementService.save(announcement);
+    }
+
+    @PostMapping("/send_email")
+    @Transactional
+    public void sendEmail(@RequestParam Long courseId, @RequestParam String title, @RequestParam String content) {
+        Course course = courseService.getCourseById(courseId);
+        course.getClientsSubscribed().forEach(client ->
+            EmailUtil.sendMail(client.getEmail(), title, content));
     }
 }
 
