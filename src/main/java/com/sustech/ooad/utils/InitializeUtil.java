@@ -115,24 +115,24 @@ public class InitializeUtil {
         Announcement announcement1_course1 = new Announcement(
                 "第16周实验课答辩调课至17周的通知",
                 "各位同学，\n" +
-                "由于大部分小组申请1月6日答辩，因此，原计划第16周的实验课调整到第17周（周五34，56，78，周六34），这四个时间段都用于项目答辩，具体安排如下：\n" +
-                "https://docs.qq.com/sheet/DVmlpa0VkaEFtT0pZ?tab=4ztx19\n" +
-                "每组15分钟，13分钟描述，2分钟问答，每过3-4组会有5-10分钟的缓冲时间\n" +
-                "答辩小组较多，请大家安排好时间。"
+                        "由于大部分小组申请1月6日答辩，因此，原计划第16周的实验课调整到第17周（周五34，56，78，周六34），这四个时间段都用于项目答辩，具体安排如下：\n" +
+                        "https://docs.qq.com/sheet/DVmlpa0VkaEFtT0pZ?tab=4ztx19\n" +
+                        "每组15分钟，13分钟描述，2分钟问答，每过3-4组会有5-10分钟的缓冲时间\n" +
+                        "答辩小组较多，请大家安排好时间。"
         ),
                 announcement2_course1 = new Announcement(
                         "OOAD项目贡献比统计通知",
                         "各位同学：\n" +
-                        "项目贡献比默认是：5人组每人20，4人组每人25。如果部分小队项目贡献度严重不均衡，可以申请贡献比调整。\n" +
-                        "贡献比调整以链接中的计算方法为准。\n" +
-                        "https://docs.qq.com/sheet/DVmlpa0VkaEFtT0pZ?tab=ncnrjj"
+                                "项目贡献比默认是：5人组每人20，4人组每人25。如果部分小队项目贡献度严重不均衡，可以申请贡献比调整。\n" +
+                                "贡献比调整以链接中的计算方法为准。\n" +
+                                "https://docs.qq.com/sheet/DVmlpa0VkaEFtT0pZ?tab=ncnrjj"
                 ),
                 announcement3_course1 = new Announcement(
                         "OOAD期末考察要求已发布",
                         "各位同学，\n" +
-                        "本门课程的期末考察文档已发布，请在Assignments中查看，最后将报告提交到sakai中的Assingment里。\n" +
-                        "考察作业仅对当前在教务系统中报名二级制的同学开放，请大家注意截止日期：2023年1月10日晚10:00，如若延期提交会有90%分数折扣。\n" +
-                        "请悉知。"
+                                "本门课程的期末考察文档已发布，请在Assignments中查看，最后将报告提交到sakai中的Assingment里。\n" +
+                                "考察作业仅对当前在教务系统中报名二级制的同学开放，请大家注意截止日期：2023年1月10日晚10:00，如若延期提交会有90%分数折扣。\n" +
+                                "请悉知。"
                 );
         announcement1_course1.setCourse(course1);
         announcement2_course1.setCourse(course1);
@@ -183,12 +183,14 @@ public class InitializeUtil {
                 calendar2_comment = Calendar.getInstance(),
                 calendar3_comment = Calendar.getInstance(),
                 calendar4_comment = Calendar.getInstance(),
-                calendar5_comment = Calendar.getInstance();
+                calendar5_comment = Calendar.getInstance(),
+                calendar6_comment = Calendar.getInstance();
         calendar1_comment.set(2022, Calendar.SEPTEMBER, 28, 23, 10, 10);
         calendar2_comment.set(2023, Calendar.JANUARY, 1, 0, 0, 0);
         calendar3_comment.set(2022, Calendar.DECEMBER, 1, 1, 1, 1);
         calendar4_comment.set(2023, Calendar.JANUARY, 1, 2, 2, 2);
         calendar5_comment.set(2021, Calendar.JANUARY, 30, 8, 8, 8);
+        calendar6_comment.set(2023, Calendar.JANUARY, 5, 23, 23, 8);
         Comment comment1_chapter1_course1_stu1 = new Comment(
                 "讲得很好，下次还来",
                 student1.getName(),
@@ -213,7 +215,11 @@ public class InitializeUtil {
                         "来了",
                         student2.getName(),
                         calendar5_comment.getTime()
-                );
+                ), comment_chapter1_course3_tcr2 = new Comment(
+                "SukiSuki!!! =w=",
+                teacher2.getName(),
+                calendar6_comment.getTime()
+        );
         chapter1_course1.getComments().addAll(Arrays.asList(
                 comment1_chapter1_course1_stu1,
                 comment2_chapter1_course1_stu1,
@@ -223,26 +229,35 @@ public class InitializeUtil {
                 comment_chapter2_course1_stu1,
                 comment_chapter2_course1_stu2
         ));
+        chapter1_course3.getComments().add(
+                comment_chapter1_course3_tcr2
+        );
+
         comment1_chapter1_course1_stu1.setChapter(chapter1_course1);
         comment2_chapter1_course1_stu1.setChapter(chapter1_course1);
         comment_chapter1_course1_tcr1.setChapter(chapter1_course1);
         comment_chapter2_course1_stu1.setChapter(chapter2_course1);
         comment_chapter2_course1_stu2.setChapter(chapter2_course1);
+        comment_chapter1_course3_tcr2.setChapter(chapter1_course3);
         comment1_chapter1_course1_stu1.setUser(student1);
         comment2_chapter1_course1_stu1.setUser(student1);
         comment_chapter1_course1_tcr1.setUser(teacher1);
         comment_chapter2_course1_stu1.setUser(student1);
         comment_chapter2_course1_stu2.setUser(student2);
+        comment_chapter1_course3_tcr2.setUser(teacher2);
         commentRepository.saveAll(Arrays.asList(
                 comment1_chapter1_course1_stu1,
                 comment2_chapter1_course1_stu1,
                 comment_chapter1_course1_tcr1,
                 comment_chapter2_course1_stu1,
-                comment_chapter2_course1_stu2
+                comment_chapter2_course1_stu2,
+                comment_chapter1_course3_tcr2
         ));
         student1.getComments().addAll(Arrays.asList(comment_chapter2_course1_stu1, comment1_chapter1_course1_stu1, comment2_chapter1_course1_stu1));
         teacher1.getComments().add(comment_chapter1_course1_tcr1);
         student2.getComments().add(comment_chapter2_course1_stu2);
+        teacher2.getComments().add(comment_chapter1_course3_tcr2);
+
 
         Quiz quiz_chapter1_course1 = new Quiz(chapter1_course1),
                 quiz_chapter2_course1 = new Quiz(chapter2_course1),
