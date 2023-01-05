@@ -1,10 +1,7 @@
 package com.sustech.ooad.controller;
 
 import com.sustech.ooad.entity.*;
-import com.sustech.ooad.service.AssignmentGradeBookService;
-import com.sustech.ooad.service.ChapterService;
-import com.sustech.ooad.service.CourseService;
-import com.sustech.ooad.service.QuizGradeBookService;
+import com.sustech.ooad.service.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +18,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/export")
@@ -37,6 +35,9 @@ public class ExportController {
 
     @Autowired
     private AssignmentGradeBookService assignmentGradeBookService;
+
+    @Autowired
+    private ClientService clientService;
 
     @GetMapping("")
     @Transactional
@@ -91,21 +92,42 @@ public class ExportController {
             QuizGradeBook quizGradeBook = quizGradeBookService.getByStudentAndQuiz(student, quiz);
             if (quizGradeBook == null){
                 studentScore.setQuiz_score("未完成");
+                studentScore.setQuiz_gradebook_id(-1L);
             } else {
                 studentScore.setQuiz_score(String.valueOf(quizGradeBook.getGrade()));
+                studentScore.setQuiz_gradebook_id(quizGradeBook.getId());
             }
 
             AssignmentGradeBook assignmentGradeBook = assignmentGradeBookService.getByStudentAndAssignment(student, assignment);
             if (assignmentGradeBook == null){
                 studentScore.setHomework_score("未提交");
+                studentScore.setHomework_gradebook_id(-1L);
             } else if (assignmentGradeBook.isRead()){
                 studentScore.setHomework_score(String.valueOf(assignmentGradeBook.getGrade()));
+                studentScore.setHomework_gradebook_id(assignmentGradeBook.getId());
             } else {
                 studentScore.setHomework_score("未批改");
+                studentScore.setHomework_gradebook_id(assignmentGradeBook.getId());
             }
             studentScores.add(studentScore);
         }
         return studentScores;
+    }
+
+    @PostMapping("/updateQuizAndAssignment")
+    @Transactional
+    public void updateQuizAndAssignment(@RequestBody List<StudentScore> studentScores){
+        for (StudentScore studentScore : studentScores){
+            if (studentScore.getQuiz_gradebook_id() != -1){
+                QuizGradeBook quizGradeBook = quizGradeBookService.getById(studentScore.getQuiz_gradebook_id());
+                quizGradeBook.setGrade(Integer.parseInt(studentScore.getQuiz_score()));
+            }
+            if (studentScore.getHomework_gradebook_id() != -1 && !studentScore.getHomework_score().equals("未批改")){
+                AssignmentGradeBook assignmentGradeBook = assignmentGradeBookService.getById(studentScore.getHomework_gradebook_id());
+                assignmentGradeBook.setGrade(Integer.parseInt(studentScore.getHomework_score()));
+                assignmentGradeBook.setRead(true);
+            }
+        }
     }
 }
 
@@ -118,4 +140,6 @@ class StudentScore{
     private String name;
     private String quiz_score;
     private String homework_score;
+    private Long quiz_gradebook_id;
+    private Long homework_gradebook_id;
 }

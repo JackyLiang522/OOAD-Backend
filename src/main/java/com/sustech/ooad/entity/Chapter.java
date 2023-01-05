@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-
 @Entity
 @Data
 @Table(name = "chapter")
