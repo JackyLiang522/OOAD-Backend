@@ -164,8 +164,11 @@ public class InitializeUtil {
         assignmentGradeBook_assi1_stu1.setGrade(100);
         assignmentGradeBook_assi1_stu2.setGrade(100);
         assignmentGradeBook_assi2_stu1.setGrade(80);
-        assignmentGradeBook_assi2_stu2.setGrade(60);
-        assignmentGradeBook_assi3_stu1.setGrade(0);
+        assignmentGradeBook_assi2_stu2.setGrade(0);
+        assignmentGradeBook_assi1_stu1.setRead(true);
+        assignmentGradeBook_assi1_stu2.setRead(true);
+        assignmentGradeBook_assi2_stu1.setRead(true);
+        assignmentGradeBook_assi2_stu2.setRead(true);
         assignmentGradeBookRepository.saveAll(Arrays.asList(
                 assignmentGradeBook_assi1_stu1,
                 assignmentGradeBook_assi1_stu2,
