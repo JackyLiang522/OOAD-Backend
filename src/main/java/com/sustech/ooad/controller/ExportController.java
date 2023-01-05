@@ -73,7 +73,9 @@ public class ExportController {
     @GetMapping("/list")
     @Transactional
     public List<StudentScore> getStudentScore(@RequestParam Long chapterId){
+
         return util(chapterId);
+
     }
 
 
@@ -105,9 +107,13 @@ public class ExportController {
             } else if (assignmentGradeBook.isRead()){
                 studentScore.setHomework_score(String.valueOf(assignmentGradeBook.getGrade()));
                 studentScore.setHomework_gradebook_id(assignmentGradeBook.getId());
+                studentScore.setAttachment_url("http://localhost:8081/api/upload/studentAssignment/" + chapterId + "_" + student.getId() + ".pdf");
+                studentScore.setAttachment_name(student.getName() + "的作业");
             } else {
                 studentScore.setHomework_score("未批改");
                 studentScore.setHomework_gradebook_id(assignmentGradeBook.getId());
+                studentScore.setAttachment_url("http://localhost:8081/api/upload/studentAssignment/" + chapterId + "_" + student.getId() + ".pdf");
+                studentScore.setAttachment_name(student.getName() + "的作业");
             }
             studentScores.add(studentScore);
         }
@@ -159,6 +165,8 @@ public class ExportController {
         os.close();
     }
 
+
+
 }
 
 @Setter
@@ -172,6 +180,8 @@ class StudentScore{
     private String homework_score;
     private Long quiz_gradebook_id;
     private Long homework_gradebook_id;
+    private String attachment_url = "";
+    private String attachment_name = "";
 }
 
 @Setter
