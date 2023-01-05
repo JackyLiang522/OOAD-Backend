@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -44,9 +45,14 @@ public class QuizController {
     @Transactional
     public Quiz add(@RequestParam Long chapterId, @RequestBody List<FrontQuiz> questionList){
         Chapter chapter = chapterService.getChapterById(chapterId);
-        Quiz quiz = new Quiz(chapter);
-        chapter.setQuiz(quiz);
-        quizService.save(quiz);
+        Quiz quiz;
+        if (chapter.getQuiz() != null){
+            quiz = chapter.getQuiz();
+        } else {
+            quiz = new Quiz(chapter);
+            chapter.setQuiz(quiz);
+            quizService.save(quiz);
+        }
         for (FrontQuiz frontQuiz : questionList){
             QuizProblem problem = new QuizProblem(quiz, frontQuiz.getDescription(), frontQuiz.getType());
 
@@ -109,6 +115,35 @@ public class QuizController {
         quizGradeBook.setGrade(grade);
     }
 
+    @GetMapping("/listQuizProblems")
+    @Transactional
+    public List<MyFrontQuizProblem> listQuizProblems(@RequestParam Long chapterId){
+        Chapter chapter = chapterService.getChapterById(chapterId);
+        List<MyFrontQuizProblem> frontQuizProblems = new ArrayList<>();
+        List<QuizProblem> quizProblems = chapter.getQuiz().getQuizProblems();
+        for (QuizProblem problem : quizProblems){
+            MyFrontQuizProblem frontQuizProblem = new MyFrontQuizProblem();
+            frontQuizProblem.setType(problem.getType());
+            frontQuizProblem.setDescription(problem.getDescription());
+            String[] options = problem.getOptions().split("\\|");
+            List<FrontData> ops = new ArrayList<>();
+            for (String option : options) {
+                ops.add(new FrontData(new Date().getTime(), option));
+            }
+            frontQuizProblem.setOptions(ops);
+
+            String[] answers = problem.getAnswer().split("\\|");
+            List<String> ans = new ArrayList<>();
+            for (int i = 0; i < answers.length; i++){
+                ans.add("选项 " + answers[i]);
+            }
+            frontQuizProblem.setAnswers(ans);
+            frontQuizProblem.setId(new Date().toString());
+            frontQuizProblems.add(frontQuizProblem);
+        }
+        return frontQuizProblems;
+    }
+
 }
 
 @Setter
@@ -137,8 +172,22 @@ class FrontData{
 @AllArgsConstructor
 @NoArgsConstructor
 class FrontQuizProblem{
+    private String id;
     private String description;
     private String type;
     private List<String> answers;
     private List<String> options;
+}
+
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+class MyFrontQuizProblem{
+    private String id;
+    private String description;
+    private String type;
+    private List<String> answers;
+    private List<FrontData> options;
 }
