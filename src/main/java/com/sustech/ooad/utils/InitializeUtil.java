@@ -427,14 +427,22 @@ public class InitializeUtil {
                         calendar_record4.getTime(),
                         ""
                 ),
-                record5_trc1 = new TransactionRecord(
+                record5_tcr1 = new TransactionRecord(
                         30,
                         course1.getPrice(),
                         teacher1,
                         calendar_record5.getTime(),
                         course1.getCourseName()
                 ),
-                record6_stu2 = new TransactionRecord(
+                record6_stu1 = new TransactionRecord(
+                        0,
+                        -course1.getPrice(),
+                        student1,
+                        calendar_record6.getTime(),
+                        course1.getCourseName()
+
+                ),
+                record7_stu2 = new TransactionRecord(
                         0,
                         -course1.getPrice(),
                         student2,
@@ -443,19 +451,27 @@ public class InitializeUtil {
 
                 );
         transactionRecordRepository.saveAll(Arrays.asList(
-                record1_tcr1, record2_tcr1, record3_tcr1, record4_tcr1, record5_trc1, record6_stu2
+                record1_tcr1,
+                record2_tcr1, 
+                record3_tcr1, 
+                record4_tcr1, 
+                record5_tcr1, 
+                record6_stu1,
+                record7_stu2
         ));
         teacher1.getTransactionRecords().addAll(Arrays.asList(
                 record1_tcr1,
                 record2_tcr1,
                 record3_tcr1,
                 record4_tcr1,
-                record5_trc1
+                record5_tcr1
         ));
-        student2.getTransactionRecords().add(record6_stu2);
+        student1.getTransactionRecords().add(record6_stu1);
+        student2.getTransactionRecords().add(record7_stu2);
         teacher1.getCoursesSubscribed().addAll(Arrays.asList(course1, course2));
-        student2.getCoursesSubscribed().add(course2);
-        course1.getClientsSubscribed().add(teacher1);
-        course2.getClientsSubscribed().addAll(Arrays.asList(teacher1, student2));
+        student1.getCoursesSubscribed().add(course1);
+        student2.getCoursesSubscribed().add(course1);
+        course1.getClientsSubscribed().addAll(Arrays.asList(teacher1, student1, student2));
+        course2.getClientsSubscribed().add(teacher1);
     }
 }
