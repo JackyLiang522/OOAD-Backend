@@ -38,13 +38,18 @@ public class AssignmentController {
     public FrontAssignment getAssignmentsByChapterId(@RequestParam Long chapterId){
         Chapter chapter = chapterService.findChapterById(chapterId);
         Assignment assignment = chapter.getAssignment();
-        FrontAssignment frontAssignment = new FrontAssignment();
-        frontAssignment.setTitle(assignment.getTitle());
-        Date date = assignment.getDeadline();
-        SimpleDateFormat sformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//日期格式
-        String ddl = sformat.format(date);
-        frontAssignment.setDeadline(ddl);
-        return frontAssignment;
+        if (assignment != null){
+            FrontAssignment frontAssignment = new FrontAssignment();
+            frontAssignment.setTitle(assignment.getTitle());
+            Date date = assignment.getDeadline();
+            SimpleDateFormat sformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//日期格式
+            String ddl = sformat.format(date);
+            frontAssignment.setDeadline(ddl);
+            return frontAssignment;
+        } else {
+            return null;
+        }
+
     }
 
     // http://localhost:8081/api/assignment/add?chapterId=&&title=&&deadline=
