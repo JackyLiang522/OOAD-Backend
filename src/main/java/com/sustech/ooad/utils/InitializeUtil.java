@@ -299,29 +299,29 @@ public class InitializeUtil {
                 ),
                 problem1_chapter1_course2 = new QuizProblem(
                         quiz_chapter1_course2,
-                        "单选",
                         "观察者模式表述错误的是",
+                        "单选",
                         "观察者角色的更新是被动的|被观察者可以通知观察者进行更新|观察者可以改变被观察者的状态，再由被观察者通知所有观察者依据被观察者的状态进行|",
                         "3|"
                 ),
                 problem1_chapter1_course3 = new QuizProblem(
                         quiz_chapter1_course3,
-                        "单选",
                         "Jerry看到Tom睡觉了，他就会出来寻找奶酪；如果Tom醒了，Jerry就会回到洞中。请问采用何种设计模式描述该场景比较合适",
+                        "单选",
                         "装饰器模式|适配器模式|观察者模式|命令模式|",
                         "3|"
                 ),
                 problem1_chapter1_course4 = new QuizProblem(
                         quiz_chapter1_course4,
-                        "单选",
                         "公司要为客户开发一个网站用来发布产品信息和客户沟通，那么该公司的系统分析人员，最好采用UML中的（）进行功能分析与建模",
+                        "单选",
                         "用例图|状态图|类图|活动图|",
                         "1|"
                 ),
                 problem1_chapter1_course5 = new QuizProblem(
                         quiz_chapter1_course5,
-                        "单选",
                         "对于ATM机进动态建模，UML中（）起关键作用",
+                        "单选",
                         "用例图|活动图|状态图|顺序图|",
                         "3|"
                 );
