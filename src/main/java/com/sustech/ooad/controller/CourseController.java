@@ -57,9 +57,7 @@ public class CourseController {
     @Transactional
     public List<Course> listCourseByTeacher(@RequestParam Long teacherId) {
         Client teacher = clientService.getUserById(teacherId);
-        return courseService.getCourseByTeacher(teacher).stream()
-            .filter(course -> course.getStatus() == 1)
-            .collect(Collectors.toList());
+        return new ArrayList<>(courseService.getCourseByTeacher(teacher));
     }
 
     // http://localhost:8081/api/course/list_by_id?courseId=

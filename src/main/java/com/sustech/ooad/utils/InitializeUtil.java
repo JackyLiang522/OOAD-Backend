@@ -62,7 +62,7 @@ public class InitializeUtil {
                 ),
                 course4 = new Course(
                         teacher1,
-                        "计算机系统设计及应用A",
+                        "Java2",
                         "这门课程主要用java语言介绍比较高级的面向对象编程技术，包括网络编程及多线程。学生应该熟悉java编程环境及相关APIs。通过这门课程，学生可以具备开发一款可以实际应用软件的能力。",
                         5
                 ),
@@ -71,14 +71,21 @@ public class InitializeUtil {
                         "阿拉伯世界的1500年",
                         "本课程共分十五个主题，大致对应阿拉伯世界的十五个世纪，涵盖伊斯兰教产生之前的阿拉伯半岛概况、阿拉伯帝国的迅速扩张、黄金时代阿拉伯文化的世界影响、及近现代为摆脱殖民压迫的阿拉伯民族觉醒等内容。",
                         10
+                ),
+                course6 = new Course(
+                        teacher1,
+                        "线性代数",
+                        "本课程旨在让学生掌握线性代数的基本概念和简单运算。",
+                        0
                 );
         course1.setStatus(1);
         course2.setStatus(1);
         course3.setStatus(1);
         course4.setStatus(0);
         course5.setStatus(2);
-        courseRepository.saveAll(Arrays.asList(course1, course2, course3, course4, course5));
-        teacher1.getCoursesCreated().addAll(Arrays.asList(course1, course2, course3, course4));
+        course6.setStatus(2);
+        courseRepository.saveAll(Arrays.asList(course1, course2, course3, course4, course5, course6));
+        teacher1.getCoursesCreated().addAll(Arrays.asList(course1, course2, course3, course4, course6));
         teacher2.getCoursesCreated().add(course5);
 
         Chapter chapter1_course1 = new Chapter("UML 模型 1"),
@@ -452,10 +459,10 @@ public class InitializeUtil {
                 );
         transactionRecordRepository.saveAll(Arrays.asList(
                 record1_tcr1,
-                record2_tcr1, 
-                record3_tcr1, 
-                record4_tcr1, 
-                record5_tcr1, 
+                record2_tcr1,
+                record3_tcr1,
+                record4_tcr1,
+                record5_tcr1,
                 record6_stu1,
                 record7_stu2
         ));
