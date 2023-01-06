@@ -94,7 +94,7 @@ public class UploadController {
         try {
             // Save the uploaded file to the specified directory
             byte[] bytes = file.getBytes();
-            String filename = PDF_FOLDER + chapterId + "_" + studentId +".pdf";
+            String filename = STUDENT_PDF + chapterId + "_" + studentId +".pdf";
             File uploadedFile = new File(filename);
             uploadedFile.createNewFile();
             java.nio.file.Files.write(uploadedFile.toPath(), bytes);
